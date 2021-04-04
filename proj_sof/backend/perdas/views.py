@@ -7,6 +7,7 @@ from rest_framework import status
 from .models import PerdasCadastro
 from .serializers import PerdasCadastroSerializer
 from rest_framework.decorators import api_view
+import math
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -53,15 +54,34 @@ def perda_detail(request, pk):
             perda.delete()
             return JsonResponse({'message': 'registro deletado !'}, status=status.HTTP_204_NO_CONTENT)
         return JsonResponse(perda_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
+
     except PerdasCadastro.DoesNotExist:
         return JsonResponse({'message': 'o registro não existe'}, status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['GET'])
 def perda_list_cpf(request, cpf):
-    perdas = PerdasCadastro.objects.filter(cpf == cpf)
+    perdas = PerdasCadastro.objects.filter(cpf__in = cpf)
 
     if request.method == 'GET':
         perdas_serializer = PerdasCadastroSerializer(perdas, many=True)
         return JsonResponse(perdas_serializer.data, safe=False)
+
+
+@api_view(['GET'])
+def checa_veracidade(resquest, locLat, locLng, date):
+    perdas = PerdasCadastro.objects.filter(data__year='date__year',
+                                           data__month='date__month',
+                                           data__day='date__day')
+    if resquest.method == 'GET':
+        for perda in perdas:
+            dist = 6371 * math.acos(math.cos(
+                math.radians(90-float(perda.locLat))) *
+                math.cos(math.radians(90-float(locLat))) +
+                math.sin(math.radians(90-float(perda.locLat))) *
+                math.sin(math.radians(90-locLat)) *
+                math.cos(math.radians(float(perda.locLng)-locLng)) * 1.15)
+            if dist >= 10:
+                perda_serializer = PerdasCadastroSerializer(perda, many=True)
+                return JsonResponse(perda_serializer.data, safe=False)
+    return JsonResponse('', safe=False)    

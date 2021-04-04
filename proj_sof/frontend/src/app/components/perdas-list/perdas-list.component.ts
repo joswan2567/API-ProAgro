@@ -2,15 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PerdaService } from 'src/app/services/perda.service';
 import { PerdaCadastro } from 'src/app/models/perda.model';
 import {animate, state, style, transition, trigger} from '@angular/animations';
-import { AppModule } from 'src/app/app.module';
-
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
 @Component({
   selector: 'app-perdas-list',
@@ -27,8 +18,8 @@ export interface PeriodicElement {
 })
 export class PerdasListComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'cpf'];
-  columnsToDisplay = ['name', 'cpf'];
+  displayedColumns: string[] = ['nome', 'cpf', 'actions'];
+  columnsToDisplay: string[] = this.displayedColumns.slice();
   perdas: PerdaCadastro[];
   currentPerda: PerdaCadastro | null;
   currentIndex = -1;

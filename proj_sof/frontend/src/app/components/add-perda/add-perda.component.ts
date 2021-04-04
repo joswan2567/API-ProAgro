@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { PerdaService } from 'src/app/services/perda.service';
 import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
 import { DialogMapComponent } from '../dialog-map/dialog-map.component';
@@ -50,23 +50,23 @@ export class AddPerdaComponent implements OnInit {
     });
   }
 
-  showOldRegister(){
-     const dialogRef = this.dialog.open(DialogMapComponent, {
-      data: {latlngCurrent: "teste", latlngOld: "teste"}
+  showOldRegister() {
+    const dialogRef = this.dialog.open(DialogMapComponent, {
+      data: { latlngCurrent: "teste", latlngOld: "teste" }
     });
-      dialogRef.afterClosed().subscribe(result => {
-        this.blockRegister = result;
+    dialogRef.afterClosed().subscribe(result => {
+      this.blockRegister = result;
     });
   }
 
-  checaVeracidade(){
-    if((this.form.controls['colheitaData'].value != null) && (this.form.controls['localizacao'].value != null)){
+  checaVeracidade() {
+    if ((this.form.controls['colheitaData'].value != null) && (this.form.controls['localizacao'].value != null)) {
 
     }
   }
 
   savePerda(): void {
-    if (this.form.invalid){
+    if (this.form.invalid) {
       this.dialog.open(DialogErrorComponent);
       // this.showOldRegister();
       return;
@@ -76,9 +76,9 @@ export class AddPerdaComponent implements OnInit {
       cpf: this.form.controls['cpf'].value,
       email: this.form.controls['email'].value,
       localizacao: this.form.controls['localizacao'].value,
-      colheitaTipo: this.form.controls['colheitaTipo'].value,
-      colheitaData: this.form.controls['colheitaData'].value,
-      eventoOcorrido: this.form.controls['eventoOcorrido'].value,
+      colheitatipo: this.form.controls['colheitaTipo'].value,
+      colheitadata: this.form.controls['colheitaData'].value,
+      eventoocorrido: this.form.controls['eventoOcorrido'].value,
     };
     this.perdaService.create(data).subscribe(
       response => {
@@ -90,12 +90,9 @@ export class AddPerdaComponent implements OnInit {
       });
   }
 
-  // newPerda(): void {
-  //   this.submitted = false;
-  //   this.perda = {
-  //     nome: '',
-  //     cpf: '',
-  //   };
-  // }
+  newPerda(): void {
+    // this.submitted = false;
+      window.location.reload();
+  }
 
 }

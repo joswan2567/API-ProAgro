@@ -1,0 +1,15 @@
+:root {
+    --primary: hsla(135, 70%, 45%, 0.65);
+    --secondary: hsla(0, 0%, 100%, 0.65);
+}
+
+.background {
+    /* background:  */
+    /* linear-gradient( var(--primary), var(--secondary)),
+  url(./../../../assets/images/teste.jpg) ; */
+    background: rgb(255, 255, 255);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(11, 121, 9, 0.5886729691876751) 45%), url(./../assets/images/teste.jpg);
+    --webkit-background-size: cover;
+    text-align: center;
+    height: 100vh;
+}

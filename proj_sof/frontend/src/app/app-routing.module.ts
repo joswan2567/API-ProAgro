@@ -8,6 +8,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'perdas', pathMatch: 'full' },
   { path: 'perdas', component: PerdasListComponent },
   { path: 'perdas/:id', component: PerdaDetailsComponent },
+  { path: 'perdas/:locLat,:locLng,:date', component: PerdaDetailsComponent },
   { path: 'add', component: AddPerdaComponent }
 ];
 

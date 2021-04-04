@@ -1,0 +1,21 @@
+from django.db import models
+
+class PerdasCadastro(models.Model):
+    
+    nome = models.CharField(max_length=60, null=True)
+    email = models.CharField(max_length=60, null=True)
+    cpf = models.CharField('CPF', max_length=11, unique=True, null=True)
+    loc = models.CharField('LAT, LNG', max_length=11, null=True)
+    evento_ocorrido = models.CharField(max_length=25, null=True)
+    lavoura_tipo = models.CharField(max_length=25, null=True)
+    colheita_data = models.DateTimeField(null=True) 
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['created_at']
+        verbose_name = (u'nome')
+        verbose_name_plural = (u'nomes')

@@ -1,0 +1,103 @@
+<div class="background">
+  <mat-card style="width: 60%; min-height: 50%; margin: auto;">
+    <div style="margin: auto;" class="submit-form">
+      <form [formGroup]="form">
+        <div *ngIf="!submitted">
+          <div fxLayout="column">
+
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-evenly center" >
+
+              <mat-form-field fxFlex="40" class="example-form-field">
+                <mat-label>Nome</mat-label>
+                <input matInput type="text" formControlName="nome" required />
+                <mat-error *ngIf="(form.controls['nome'].hasError('required') && form.controls['nome'].touched) ">
+                  Campo necessário!
+                </mat-error>
+                <button mat-button *ngIf="form.controls['nome'].value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="form.controls['nome'].setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="30" fxLayout="column" fxLayoutGap="20px" fxLayout.xs="column">
+                <mat-label>Email</mat-label>
+                <input type="email" formControlName="email" matInput [errorStateMatcher]="matcher" [email]="true"
+                  placeholder="Ex. pat@example.com" required>
+                <mat-error *ngIf="(form.controls['email'].hasError('required') && form.controls['email'].touched) ">
+                  Campo necessário!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="20">
+                <mat-label>CPF</mat-label>
+                <input matInput formControlName="cpf" mask="000.000.000-00" required />
+                <mat-error *ngIf="(form.controls['cpf'].hasError('required') && form.controls['cpf'].touched) ">
+                  Campo necessário!
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="20px" fxLayout.xs="column">
+
+              <mat-form-field fxFlex="20">
+                <mat-label disabled="false">Data da colheita</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="colheitaData" ui-date-mask="DD-MM-YYYY"
+                  disabled required>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker disabled="false"></mat-datepicker>
+                <mat-error
+                  *ngIf="(form.controls['colheitaData'].hasError('required') && form.controls['colheitaData'].touched) ">
+                  Campo necessário!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="20">
+                <mat-label>Localização</mat-label>
+                <input matInput formControlName="localizacao" mask="00.000000, 00.000000"
+                  placeholder="+17.456789, -37.784565" required />
+                <mat-error
+                  *ngIf="(form.controls['localizacao'].hasError('required') && form.controls['localizacao'].touched) ">
+                  Campo necessário!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="20">
+                <mat-label>Tipo Colheita</mat-label>
+                <mat-select formControlName="colheitaTipo" required>
+                  <mat-option *ngFor="let colheitaTipo of colheitaTipos" [value]="colheitaTipo">
+                    {{colheitaTipo}}
+                  </mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="(form.controls['colheitaTipo'].hasError('required') && form.controls['colheitaTipo'].touched) ">
+                  Campo necessário!
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="20">
+                <mat-label>Evento Ocorrido</mat-label>
+                <mat-select formControlName="eventoOcorrido" required>
+                  <mat-option *ngFor="let evento of eventos" [value]="evento">
+                    {{evento}}
+                  </mat-option>
+                  <mat-error
+                    *ngIf="(form.controls['eventoOcorrido'].hasError('required') && form.controls['eventoOcorrido'].touched) ">
+                    Campo necessário!
+                  </mat-error>
+                </mat-select>
+              </mat-form-field>
+
+            </div>
+          </div>
+
+        </div>
+      </form>
+
+      <button mat-button color="primary" (click)="savePerda()">Submit</button>
+    </div>
+
+    <div *ngIf="submitted">
+      <h4>You submitted successfully!</h4>
+      <button class="btn btn-success" (click)="newPerda()">Add</button>
+    </div>
+  </mat-card>
+</div>

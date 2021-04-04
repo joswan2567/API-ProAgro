@@ -1,0 +1,40 @@
+<div style="width: 400px; margin: auto;">
+    <div *ngIf="currentPerda" class="edit-form">
+        <h4>Perda</h4>
+        <form>
+            <div class="form-group">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" [(ngModel)]="currentPerda.nome" name="nome" />
+            </div>
+            <!-- <div class="form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" [(ngModel)]="currentTutorial.description" name="description" />
+            </div>
+
+            <div class="form-group">
+                <label><strong>Status:</strong></label> {{ currentTutorial.published ? "Published" : "Pending" }}
+            </div> -->
+        </form>
+
+        <!-- <button class="badge badge-primary mr-2" *ngIf="currentTutorial.published" (click)="updatePublished(false)">
+      UnPublish
+    </button>
+        <button *ngIf="!currentTutorial.published" class="badge badge-primary mr-2" (click)="updatePublished(true)">
+      Publish
+    </button> -->
+
+        <button class="badge badge-danger mr-2" (click)="deletePerda()">
+      Apagar
+    </button>
+
+        <button type="submit" class="badge badge-success" (click)="updatePerda()">
+      Atualizar
+    </button>
+        <p>{{ message }}</p>
+    </div>
+
+    <div *ngIf="!currentPerda">
+        <br />
+        <p>Não foi possível acessar o Registro...</p>
+    </div>
+</div>

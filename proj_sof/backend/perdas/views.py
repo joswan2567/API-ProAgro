@@ -69,18 +69,21 @@ def perda_list_cpf(request, cpf):
 
 
 @api_view(['GET'])
-def checa_veracidade(resquest, locLat, locLng, date):
-    perdas = PerdasCadastro.objects.filter(data__year='date__year',
+def checa_veracidade(resquest):
+    if resquest.method == 'GET':
+
+        data = JSONParser().parse(resquest)
+
+        perdas = PerdasCadastro.objects.filter(data__year='date__year',
                                            data__month='date__month',
                                            data__day='date__day')
-    if resquest.method == 'GET':
         for perda in perdas:
             dist = 6371 * math.acos(math.cos(
                 math.radians(90-float(perda.locLat))) *
-                math.cos(math.radians(90-float(locLat))) +
+                math.cos(math.radians(90-float(data.locLat))) +
                 math.sin(math.radians(90-float(perda.locLat))) *
-                math.sin(math.radians(90-locLat)) *
-                math.cos(math.radians(float(perda.locLng)-locLng)) * 1.15)
+                math.sin(math.radians(90-data.locLat)) *
+                math.cos(math.radians(float(perda.locLng)-data.locLng)) * 1.15)
             if dist >= 10:
                 perda_serializer = PerdasCadastroSerializer(perda, many=True)
                 return JsonResponse(perda_serializer.data, safe=False)

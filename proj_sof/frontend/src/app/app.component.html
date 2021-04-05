@@ -1,16 +1,19 @@
 <div class="background">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-        <a href="#" class="navbar-brand">Teste</a>
-        <div class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a routerLink="perdas" class="nav-link">Perdas</a>
-            </li>
-            <li class="nav-item">
-                <a routerLink="add" class="nav-link">Add</a>
-            </li>
+    <mat-toolbar class="bar-top">
+        <div fxLayoutAlign="center start" style="margin-left: 2%;">
+            <mat-icon>assessment</mat-icon>
+            <span style="margin-top: -3px;">Comunicação de Perda - PROAGRO</span>
         </div>
-    </nav>
-
+        <span class="example-spacer"></span>
+        <div fxLayoutAlign="center end">
+            <button class="btn-bar-top" mat-button routerLink="perdas">
+                Registros de Perda
+            </button>
+            <button class="btn-bar-top" mat-button routerLink="add">
+                Adicionar Perda
+            </button>
+        </div>
+    </mat-toolbar>
     <div class="container mt-3">
         <router-outlet></router-outlet>
     </div>

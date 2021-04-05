@@ -11,7 +11,8 @@ import { DialogMapComponent } from '../dialog-map/dialog-map.component';
   styleUrls: ['./add-perda.component.css'],
 })
 export class AddPerdaComponent implements OnInit {
-  blockRegister: boolean;
+  customPatterns = { '0': { pattern: new RegExp('-?') }, '9': { pattern: new RegExp('[0-9]') }, };
+  blockRegister: boolean = false;
   public form: FormGroup;
   startDate = new Date();
   eventos = ['Chuva Excessiva',
@@ -43,25 +44,68 @@ export class AddPerdaComponent implements OnInit {
       nome: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250)])],
       email: new FormControl(),
       cpf: new FormControl(),
-      localizacao: new FormControl(),
+      latLocalizacao: new FormControl(),
+      lngLocalizacao: new FormControl(),
       colheitaTipo: new FormControl(),
       colheitaData: new FormControl(),
       eventoOcorrido: new FormControl(),
     });
+
+    this.form.controls['colheitaData'].valueChanges.subscribe((value) => {
+      if (value == "")
+        return;
+      else
+        this.checaVeracidade();
+    });
+    this.form.controls['latLocalizacao'].valueChanges.subscribe((value) => {
+      if (value == "")
+        return;
+      else
+        this.checaVeracidade();
+    });
+    this.form.controls['lngLocalizacao'].valueChanges.subscribe((value) => {
+      if (value == "")
+        return;
+      else
+        this.checaVeracidade();
+    });
   }
 
-  showOldRegister() {
+  showOldRegister(latConflict, lngConflict) {
     const dialogRef = this.dialog.open(DialogMapComponent, {
-      data: { latlngCurrent: "teste", latlngOld: "teste" }
+      data: {
+        latCurrent: this.form.controls['latLocalizacao'].value,
+        lngCurrent: this.form.controls['latLocalizacao'].value,
+        latConflict: latConflict,
+        lngConflict: lngConflict,
+      }
     });
     dialogRef.afterClosed().subscribe(result => {
-      this.blockRegister = result;
+      if (result == null)
+        this.newPerda();
+      else
+        this.blockRegister = true;
     });
   }
 
   checaVeracidade() {
-    if ((this.form.controls['colheitaData'].value != null) && (this.form.controls['localizacao'].value != null)) {
-
+    if ((this.form.controls['colheitaData'].value != null) &&
+      (this.form.controls['latLocalizacao'].value != null) &&
+      (this.form.controls['lngLocalizacao'].value != null)) {
+        console.log('campos');
+      const data = {
+        colheitadata: this.form.controls['colheitaData'].value,
+        loclat: this.form.controls['latLocalizacao'].value,
+        loclng: this.form.controls['lngLocalizacao'].value,
+      };
+      this.perdaService.checaVerac(data).subscribe(
+        response => {
+          console.log(response);
+          this.submitted = true;
+        },
+        error => {
+          console.log(error);
+        });
     }
   }
 
@@ -92,7 +136,8 @@ export class AddPerdaComponent implements OnInit {
 
   newPerda(): void {
     // this.submitted = false;
-      window.location.reload();
+    this.form.disable();
+    window.location.reload();
   }
 
 }

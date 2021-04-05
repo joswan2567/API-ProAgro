@@ -24,6 +24,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogMapComponent } from './components/dialog-map/dialog-map.component';
 import { AgmCoreModule } from '@agm/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -51,6 +53,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     FlexLayoutModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatToolbarModule,
     NgxMaskModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcWwZUp2n5usm0Ae4_DJfQ30L3sCtBzko'

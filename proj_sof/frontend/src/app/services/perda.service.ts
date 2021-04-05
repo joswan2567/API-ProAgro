@@ -38,4 +38,8 @@ export class PerdaService {
   findByCPF(CPF): Observable<any> {
     return this.http.get(`${baseUrl}?cpf=${CPF}`);
   }
+
+  checaVerac(data): Observable<any> {
+    return this.http.get(`${baseUrl}/checaverac`, data);
+  }
 }

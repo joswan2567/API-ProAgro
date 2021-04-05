@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { PerdaService } from 'src/app/services/perda.service';
 import { PerdaCadastro } from 'src/app/models/perda.model';
-import { MatFormFieldControl } from '@angular/material/form-field';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-perdas-list',
   templateUrl: './perdas-list.component.html',
   styleUrls: ['./perdas-list.component.css'],
-  providers:[{provide: MatFormFieldControl, useExisting: PerdasListComponent}],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -19,12 +17,15 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class PerdasListComponent implements OnInit {
 
-  displayedColumns: string[] = ['nome', 'cpf', 'actions'];
+  displayedColumns: string[] = ['nome', 'cpf'];
   columnsToDisplay: string[] = this.displayedColumns.slice();
   perdas: PerdaCadastro[];
   currentPerda: PerdaCadastro | null;
   currentIndex = -1;
   cpf = '';
+
+  lat = 51.678418;
+  lng = 7.809007;
 
   constructor(private perdaService: PerdaService) { }
 

@@ -1,0 +1,9 @@
+agm-map, #map {
+    height: 300px;
+    width: 500px;
+}
+
+.table-perdas{
+    min-height: 300px;
+    min-width: 300px;
+}

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
 import { NgxMaskModule } from 'ngx-mask';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddPerdaComponent } from './components/add-perda/add-perda.component';
@@ -17,19 +16,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { LOCALE_ID } from '@angular/core';
-import { registerLocaleData } from '@angular/common';
-import localePt from '@angular/common/locales/pt';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { DialogErrorComponent } from './components/dialog-error/dialog-error.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogMapComponent } from './components/dialog-map/dialog-map.component';
 import { AgmCoreModule } from '@agm/core';
-import {MatTableDataSource} from '@angular/material/table';
-
-
+import { MatFormFieldModule } from '@angular/material/form-field';
 @NgModule({
   declarations: [
     AppComponent,
@@ -56,13 +50,17 @@ import {MatTableDataSource} from '@angular/material/table';
     MatSelectModule,
     FlexLayoutModule,
     MatDialogModule,
-    MatTableDataSource,
+    MatFormFieldModule,
     NgxMaskModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcWwZUp2n5usm0Ae4_DJfQ30L3sCtBzko'
     })
   ],
-  providers: [ { provide: LOCALE_ID, useValue: 'pt-BR' }  ],
+  exports: [
+    MatFormFieldModule,
+    MatInputModule,
+  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

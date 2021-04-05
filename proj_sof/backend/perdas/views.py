@@ -61,7 +61,7 @@ def perda_detail(request, pk):
 
 @api_view(['GET'])
 def perda_list_cpf(request, cpf):
-    perdas = PerdasCadastro.objects.filter(cpf__in = cpf)
+    perdas = PerdasCadastro.objects.get(cpf__exact = cpf)
 
     if request.method == 'GET':
         perdas_serializer = PerdasCadastroSerializer(perdas, many=True)
@@ -84,4 +84,4 @@ def checa_veracidade(resquest, locLat, locLng, date):
             if dist >= 10:
                 perda_serializer = PerdasCadastroSerializer(perda, many=True)
                 return JsonResponse(perda_serializer.data, safe=False)
-    return JsonResponse('', safe=False)    
+    return JsonResponse(None, safe=False)    

@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PerdaService } from 'src/app/services/perda.service';
 import { PerdaCadastro } from 'src/app/models/perda.model';
+import { MatFormFieldControl } from '@angular/material/form-field';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-perdas-list',
   templateUrl: './perdas-list.component.html',
   styleUrls: ['./perdas-list.component.css'],
-  providers:[],
+  providers:[{provide: MatFormFieldControl, useExisting: PerdasListComponent}],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),

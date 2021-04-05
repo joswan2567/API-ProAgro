@@ -40,6 +40,6 @@ export class PerdaService {
   }
 
   checaVerac(data): Observable<any> {
-    return this.http.get(`${baseUrl}/checaverac`, data);
+    return this.http.post(`${baseUrl}/checaverac`, data);
   }
 }

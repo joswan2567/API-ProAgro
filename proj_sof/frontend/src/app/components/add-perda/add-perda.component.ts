@@ -92,11 +92,16 @@ export class AddPerdaComponent implements OnInit {
     if ((this.form.controls['colheitaData'].value != null) &&
       (this.form.controls['latLocalizacao'].value != null) &&
       (this.form.controls['lngLocalizacao'].value != null)) {
-        console.log('campos');
+      console.log('campos');
       const data = {
         colheitadata: this.form.controls['colheitaData'].value,
         loclat: this.form.controls['latLocalizacao'].value,
         loclng: this.form.controls['lngLocalizacao'].value,
+        nome: "",
+        cpf: "",
+        email: "",
+        colheitatipo: "",
+        eventoocorrido: "",
       };
       this.perdaService.checaVerac(data).subscribe(
         response => {

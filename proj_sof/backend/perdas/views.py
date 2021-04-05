@@ -68,12 +68,10 @@ def perda_list_cpf(request, cpf):
         return JsonResponse(perdas_serializer.data, safe=False)
 
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
 def checa_veracidade(resquest):
-    if resquest.method == 'GET':
-
+    if resquest.method == 'POST':
         data = JSONParser().parse(resquest)
-
         perdas = PerdasCadastro.objects.filter(data__year='date__year',
                                            data__month='date__month',
                                            data__day='date__day')

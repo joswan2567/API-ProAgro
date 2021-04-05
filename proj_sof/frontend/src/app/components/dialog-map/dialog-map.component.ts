@@ -2,10 +2,11 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
-  latCurrent:number;
-  lngCurrent:number;
-  latConflict:number;
-  lngConflict:number;
+  latCurrent: number;
+  lngCurrent: number;
+  latConflict: number;
+  lngConflict: number;
+  dist: number
 }
 
 @Component({
@@ -36,24 +37,71 @@ export class DialogMapComponent implements OnInit {
     this.initMap();
   }
 
-  public initMap() {
+  public async initMap() {
     let mapOptions = {
       zoom: 13,
       mapTypeId: 'hybrid',
       mapTypeControl: false,
       mapTypeControlOptions: {
         style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-        position: google.maps.ControlPosition.TOP_LEFT
+        position: google.maps.ControlPosition.TOP_LEFT,
       },
       streetViewControl: false
     };
     this.map.setOptions(mapOptions);
-    this.makerRegistroOld.setPosition(new google.maps.LatLng(this.data.latConflict, this.data.lngConflict));
+    // this.makerRegistroOld = await this.geraMarker(this.data.latConflict, this.data.lngConflict);
+    this.makerRegistroOld = await this.geraMarker(51.678418, 7.456789);
     this.makerRegistroOld.setMap(this.map);
     this.map.panTo(this.makerRegistroOld.getPosition());
-    this.makerRegistroCurrent.setPosition(new google.maps.LatLng(this.data.latCurrent, this.data.lngCurrent));
+
+    this.poly = await this.initLinha();
+    this.poly.setMap(this.map);
+    this.poly.getPath().push(this.makerRegistroOld.getPosition());
+
+    // this.makerRegistroCurrent = await this.geraMarker(this.data.latCurrent, this.data.lngCurrent);
+    this.makerRegistroCurrent = await this.geraMarker(52.456789, 9.478596);
     this.makerRegistroCurrent.setMap(this.map);
+
+    this.poly.getPath().push(this.makerRegistroCurrent.getPosition());
+
     this.map.panTo(this.makerRegistroCurrent.getPosition());
+
+    this.map.panTo(this.retornaCentro(this.poly));
+
+    this.centralizaLinha(this.poly);
   }
 
+  public geraMarker(lat, lng) {
+    var makerInicio = new google.maps.Marker({
+      position: { lat: lat, lng: lng },
+      map: this.map,
+    });
+    return makerInicio;
+  }
+
+  public initLinha() {
+    var poly = new google.maps.Polyline({
+      strokeColor: '#4285F4',
+      strokeWeight: 5,
+      strokeOpacity: 1,
+      editable: false,
+    });
+    return poly;
+  }
+
+  centralizaLinha(poly) {
+    let bounds = new google.maps.LatLngBounds();
+    for (let i = 0; i < poly.getPath().getLength(); i++)
+      bounds.extend(poly.getPath().getAt(i));
+    this.map.fitBounds(bounds);
+  }
+
+  public retornaCentro(poly) {
+    let bounds = new google.maps.LatLngBounds();
+
+    for (let i = 0; i < this.poly.getPath().getLength(); i++)
+      bounds.extend(this.poly.getPath().getAt(i));
+
+    return bounds.getCenter();
+  }
 }

@@ -1,4 +1,13 @@
 agm-map, #map {
-    height: 300px;
-    width: 500px;
+  height: 300px;
+  width: 500px;
+  /* margin: auto; */
+
+}
+.mat-dialog-content {
+  margin: 0px 0px;
+}
+agm-map-container-inner{
+  border: 3px solid #707070;
+  border-radius: 10px;
 }

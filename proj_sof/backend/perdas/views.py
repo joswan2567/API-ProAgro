@@ -4,8 +4,8 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
-from .models import PerdasCadastro
-from .serializers import PerdasCadastroSerializer
+from .models import CadastroConflitante, PerdasCadastro
+from .serializers import CadastroConflitanteSerializer, PerdasCadastroSerializer
 from rest_framework.decorators import api_view
 import math
 
@@ -74,18 +74,18 @@ def checa_veracidade(resquest):
         data = JSONParser().parse(resquest)
         perdas = PerdasCadastro.objects.all()
 
-        print(data['loclng'])
-        print(type(data['loclng']))
-
         for perda in perdas:
             dist = 6371 * math.acos(math.cos(
-                math.radians(90-float(perda.locLat))) *
-                math.cos(math.radians(90-float(data['locLat']))) +
-                math.sin(math.radians(90-float(perda.locLat))) *
-                math.sin(math.radians(90-float(data['locLat']))) *
-                math.cos(math.radians(float(perda.locLng)-float(data['locLng']))) * 1.15)
-            print(dist)
+                math.radians(90-float(perda.loclat))) *
+                math.cos(math.radians(90-float(data['loclat']))) +
+                math.sin(math.radians(90-float(perda.loclat))) *
+                math.sin(math.radians(90-float(data['loclat']))) *
+                math.cos(math.radians(float(perda.loclng)-float(data['loclng']))) * 1.15)
+            # print(dist)
             if dist >= 10:
-                perda_serializer = PerdasCadastroSerializer(perda, many=True)
-                return JsonResponse(perda_serializer.data, safe=False)
+                cadastro_conflitante_serializer = CadastroConflitanteSerializer({"loclat": perda.loclat,
+                                                                                 "loclng": perda.loclng,
+                                                                                 "idConfl": perda.id,
+                                                                                 "dist": dist})
+                return JsonResponse(cadastro_conflitante_serializer.data)
     return JsonResponse(None, safe=False)    

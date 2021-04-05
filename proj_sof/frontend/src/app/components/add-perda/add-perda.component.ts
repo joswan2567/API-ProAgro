@@ -57,8 +57,8 @@ export class AddPerdaComponent implements OnInit {
       data: {
         latCurrent: parseFloat(this.form.controls['latLocalizacao'].value),
         lngCurrent: parseFloat(this.form.controls['lngLocalizacao'].value),
-        latConflict: latConflict,
-        lngConflict: lngConflict,
+        latConflict: parseFloat(latConflict),
+        lngConflict: parseFloat(lngConflict),
       }
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -89,8 +89,7 @@ export class AddPerdaComponent implements OnInit {
           console.log(response);
           if(response != null){
             // this.submitted = true;
-            var perda = response;
-            this.showOldRegister(perda.latloc, perda.lngloc);
+            this.showOldRegister(response.loclat, response.loclng);
           }
         },
         error => {
@@ -109,7 +108,8 @@ export class AddPerdaComponent implements OnInit {
       nome: this.form.controls['nome'].value,
       cpf: this.form.controls['cpf'].value,
       email: this.form.controls['email'].value,
-      localizacao: this.form.controls['localizacao'].value,
+      loclat: this.form.controls['latLocalizacao'].value,
+      loclng: this.form.controls['lngLocalizacao'].value,
       colheitatipo: this.form.controls['colheitaTipo'].value,
       colheitadata: this.form.controls['colheitaData'].value,
       eventoocorrido: this.form.controls['eventoOcorrido'].value,

@@ -50,32 +50,13 @@ export class AddPerdaComponent implements OnInit {
       colheitaData: new FormControl(),
       eventoOcorrido: new FormControl(),
     });
-
-    this.form.controls['colheitaData'].valueChanges.subscribe((value) => {
-      if (value == "")
-        return;
-      else
-        this.checaVeracidade();
-    });
-    this.form.controls['latLocalizacao'].valueChanges.subscribe((value) => {
-      if (value == "")
-        return;
-      else
-        this.checaVeracidade();
-    });
-    this.form.controls['lngLocalizacao'].valueChanges.subscribe((value) => {
-      if (value == "")
-        return;
-      else
-        this.checaVeracidade();
-    });
   }
 
   showOldRegister(latConflict, lngConflict) {
     const dialogRef = this.dialog.open(DialogMapComponent, {
       data: {
-        latCurrent: this.form.controls['latLocalizacao'].value,
-        lngCurrent: this.form.controls['latLocalizacao'].value,
+        latCurrent: parseFloat(this.form.controls['latLocalizacao'].value),
+        lngCurrent: parseFloat(this.form.controls['lngLocalizacao'].value),
         latConflict: latConflict,
         lngConflict: lngConflict,
       }
@@ -106,7 +87,11 @@ export class AddPerdaComponent implements OnInit {
       this.perdaService.checaVerac(data).subscribe(
         response => {
           console.log(response);
-          this.submitted = true;
+          if(response != null){
+            // this.submitted = true;
+            var perda = response;
+            this.showOldRegister(perda.latloc, perda.lngloc);
+          }
         },
         error => {
           console.log(error);

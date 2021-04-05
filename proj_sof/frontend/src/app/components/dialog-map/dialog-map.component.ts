@@ -2,8 +2,10 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
-  latlngCurrent: google.maps.LatLng;
-  latlngOld: google.maps.LatLng;
+  latCurrent:number;
+  lngCurrent:number;
+  latConflict:number;
+  lngConflict:number;
 }
 
 @Component({
@@ -23,7 +25,7 @@ export class DialogMapComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<DialogMapComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit(): void {
     // this.initMap()
@@ -32,7 +34,7 @@ export class DialogMapComponent implements OnInit {
   takeMap(map) {
     this.map = map;
     this.initMap();
-}
+  }
 
   public initMap() {
     let mapOptions = {
@@ -46,6 +48,12 @@ export class DialogMapComponent implements OnInit {
       streetViewControl: false
     };
     this.map.setOptions(mapOptions);
+    this.makerRegistroOld.setPosition(new google.maps.LatLng(this.data.latConflict, this.data.lngConflict));
+    this.makerRegistroOld.setMap(this.map);
+    this.map.panTo(this.makerRegistroOld.getPosition());
+    this.makerRegistroCurrent.setPosition(new google.maps.LatLng(this.data.latCurrent, this.data.lngCurrent));
+    this.makerRegistroCurrent.setMap(this.map);
+    this.map.panTo(this.makerRegistroCurrent.getPosition());
   }
 
 }

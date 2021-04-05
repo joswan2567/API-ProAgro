@@ -43,7 +43,7 @@
                         <mat-form-field fxFlex="35">
                             <mat-label disabled="false">Data da colheita</mat-label>
                             <input matInput [matDatepicker]="picker" formControlName="colheitaData"
-                                ui-date-mask="DD-MM-YYYY" disabled required>
+                                ui-date-mask="DD-MM-YYYY" (blur)="checaVeracidade()" disabled required>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker disabled="false"></mat-datepicker>
                             <mat-error
@@ -55,7 +55,7 @@
                         <mat-form-field fxFlex="25">
                             <mat-label>Latitude da Localização</mat-label>
                             <input matInput type="text" formControlName="latLocalizacao" [patterns]="customPatterns"
-                                mask="099.999999" dropSpecialCharacters="false" placeholder="Ex. -17.456789" required />
+                                mask="099.999999" dropSpecialCharacters="false" placeholder="Ex. -17.456789" (blur)="checaVeracidade()" required />
                             <mat-error
                                 *ngIf="(form.controls['latLocalizacao'].hasError('required') && form.controls['latLocalizacao'].touched) ">
                                 Campo necessário!
@@ -65,7 +65,7 @@
                         <mat-form-field fxFlex="25">
                             <mat-label>Longitude da Localização</mat-label>
                             <input matInput formControlName="lngLocalizacao" [patterns]="customPatterns"
-                                mask="099.999999" dropSpecialCharacters="false" placeholder="Ex. +34.784698" required />
+                                mask="099.999999" dropSpecialCharacters="false" placeholder="Ex. +34.784698" (blur)="checaVeracidade()" required />
                             <mat-error
                                 *ngIf="(form.controls['lngLocalizacao'].hasError('required') && form.controls['lngLocalizacao'].touched) ">
                                 Campo necessário!

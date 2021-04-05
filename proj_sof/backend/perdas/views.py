@@ -82,8 +82,8 @@ def checa_veracidade(resquest):
                 math.radians(90-float(perda.locLat))) *
                 math.cos(math.radians(90-float(data['locLat']))) +
                 math.sin(math.radians(90-float(perda.locLat))) *
-                math.sin(math.radians(90-data['locLat'])) *
-                math.cos(math.radians(float(perda.locLng)-data['locLng'])) * 1.15)
+                math.sin(math.radians(90-float(data['locLat']))) *
+                math.cos(math.radians(float(perda.locLng)-float(data['locLng']))) * 1.15)
             print(dist)
             if dist >= 10:
                 perda_serializer = PerdasCadastroSerializer(perda, many=True)

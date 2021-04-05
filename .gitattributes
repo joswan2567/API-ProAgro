@@ -1,4 +1,6 @@
 # Auto detect text files and perform LF normalization
+/dist/
+/node_modules/
 * text=auto
 *.pyc
 __pycache__/

@@ -5,7 +5,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .btn {
    background-color: rgba(9,121,52,0.7287289915966386); 
-   color: white;
+   color: white !important;
 }
 
 .btn:disabled,

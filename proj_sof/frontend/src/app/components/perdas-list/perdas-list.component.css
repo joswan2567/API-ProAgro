@@ -2,6 +2,10 @@ agm-map, #map {
     height: 300px;
     width: 500px;
 }
+.card-perdas{
+    width: 600px !important;
+    margin: auto;
+}
 
 .table-perdas{
     min-height: 300px;

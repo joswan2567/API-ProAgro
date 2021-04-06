@@ -104,6 +104,7 @@ export class AddPerdaComponent implements OnInit {
       // this.showOldRegister();
       return;
     }
+    this.form.disable();
     const data = {
       nome: this.form.controls['nome'].value,
       cpf: this.form.controls['cpf'].value,

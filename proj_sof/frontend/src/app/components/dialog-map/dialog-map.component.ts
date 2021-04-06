@@ -23,6 +23,7 @@ export class DialogMapComponent implements OnInit {
   makerRegistroOld: google.maps.Marker;
   poly: google.maps.Polyline;
   teste: string;
+  dist;
 
   constructor(
     public dialogRef: MatDialogRef<DialogMapComponent>,
@@ -38,6 +39,7 @@ export class DialogMapComponent implements OnInit {
   }
 
   public async initMap() {
+    this.dist = this.data.dist;
     let mapOptions = {
       zoom: 13,
       mapTypeId: 'hybrid',
@@ -49,22 +51,22 @@ export class DialogMapComponent implements OnInit {
       streetViewControl: false
     };
     this.map.setOptions(mapOptions);
-    // this.makerRegistroOld = await this.geraMarker(this.data.latConflict, this.data.lngConflict);
-    this.makerRegistroOld = await this.geraMarker(51.678418, 7.456789);
+    this.makerRegistroOld = await this.geraMarker(this.data.latConflict, this.data.lngConflict);
+    // this.makerRegistroOld = await this.geraMarker(51.678418, 7.456789);
     this.makerRegistroOld.setMap(this.map);
-    this.map.panTo(this.makerRegistroOld.getPosition());
+    // this.map.panTo(this.makerRegistroOld.getPosition());
 
     this.poly = await this.initLinha();
     this.poly.setMap(this.map);
     this.poly.getPath().push(this.makerRegistroOld.getPosition());
 
-    // this.makerRegistroCurrent = await this.geraMarker(this.data.latCurrent, this.data.lngCurrent);
-    this.makerRegistroCurrent = await this.geraMarker(52.456789, 9.478596);
+    this.makerRegistroCurrent = await this.geraMarker(this.data.latCurrent, this.data.lngCurrent);
+    // this.makerRegistroCurrent = await this.geraMarker(52.456789, 9.478596);
     this.makerRegistroCurrent.setMap(this.map);
 
     this.poly.getPath().push(this.makerRegistroCurrent.getPosition());
 
-    this.map.panTo(this.makerRegistroCurrent.getPosition());
+    // this.map.panTo(this.makerRegistroCurrent.getPosition());
 
     this.map.panTo(this.retornaCentro(this.poly));
 

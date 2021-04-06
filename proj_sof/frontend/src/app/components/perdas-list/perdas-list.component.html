@@ -15,6 +15,7 @@
         </button>
       </div>
     </div>
+    <div class="mat-elevation-z8">
     <mat-table [dataSource]="perdas" class="mat-elevation-z8">
       <!-- Position Column -->
       <ng-container matColumnDef="nome">
@@ -40,10 +41,10 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button (click)="delete(row)" mat-icon-button style="color: rgba(9,121,52,0.7287289915966386);">
+          <button (click)="editPerda(row)" mat-icon-button style="color: rgba(9,121,52,0.7287289915966386);">
             <mat-icon>edit</mat-icon>
           </button>
-          <button mat-icon-button color="error">
+          <button (click)="deletePerda(row)" mat-icon-button color="error">
             <mat-icon>delete</mat-icon>
           </button>
         </mat-cell>
@@ -52,8 +53,8 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
-    <!-- <mat-paginator [length]="5" [pageSize]="3" [pageSizeOptions]="[5, 10, 25]">
-    </mat-paginator> -->
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
   </div>
 </mat-card>
 

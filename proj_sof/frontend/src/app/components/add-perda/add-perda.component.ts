@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PerdaService } from 'src/app/services/perda.service';
 import { DialogErrorComponent } from '../dialog-error/dialog-error.component';
 import { DialogMapComponent } from '../dialog-map/dialog-map.component';
@@ -36,7 +37,9 @@ export class AddPerdaComponent implements OnInit {
 
   submitted = false;
 
-  constructor(private perdaService: PerdaService, private formBuilder: FormBuilder, private dialog: MatDialog) { }
+  constructor(private router: Router, private activeRoute: ActivatedRoute, 
+    private perdaService: PerdaService, private formBuilder: FormBuilder, 
+    private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -44,11 +47,18 @@ export class AddPerdaComponent implements OnInit {
       email: new FormControl(),
       cpf: new FormControl(),
       latLocalizacao: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
-      lngLocalizacao:[null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
+      lngLocalizacao: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
       colheitaTipo: new FormControl(),
       colheitaData: new FormControl(),
       eventoOcorrido: new FormControl(),
+      id: new FormControl()
     });
+
+    let id = this.activeRoute.snapshot.params['id'];
+    if (id != null) {
+      this.form.controls['id'].setValue(id);
+      this.getPerda(id);
+    }
   }
 
   showOldRegister(latConflict, lngConflict) {
@@ -66,6 +76,42 @@ export class AddPerdaComponent implements OnInit {
       else
         this.blockRegister = true;
     });
+  }
+  getPerda(id): void {
+    this.perdaService.get(id).
+      subscribe(
+        data => {
+          this.populaDados(data)
+          console.log(data);
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  updatePerda(data): void {
+    this.perdaService.update(data.id, data)
+      .subscribe(
+        response => {
+          console.log(response);
+          console.log('O registro foi atualizado!');
+          this.router.navigate(['/perdas'], {relativeTo:this.activeRoute});
+          this.submitted = true;
+        },
+        error => {
+          console.log(error);
+        });
+  }
+
+  populaDados(data) {
+    this.form.controls['nome'].setValue(data.nome);
+    this.form.controls['cpf'].setValue(data.cpf);
+    this.form.controls['email'].setValue(data.email);
+    this.form.controls['latLocalizacao'].setValue(data.loclat);
+    this.form.controls['lngLocalizacao'].setValue(data.loclng);
+    this.form.controls['eventoOcorrido'].setValue(data.eventoocorrido);
+    this.form.controls['colheitaData'].setValue(data.colheitadata);
+    this.form.controls['colheitaTipo'].setValue(data.colheitatipo);
   }
 
   checaVeracidade() {
@@ -86,7 +132,7 @@ export class AddPerdaComponent implements OnInit {
       this.perdaService.checaVerac(data).subscribe(
         response => {
           console.log(response);
-          if(response != null){
+          if (response != null) {
             // this.submitted = true;
             this.showOldRegister(response.loclat, response.loclng);
           }
@@ -105,6 +151,7 @@ export class AddPerdaComponent implements OnInit {
     }
     this.form.disable();
     const data = {
+      id: this.form.controls['id'].value,
       nome: this.form.controls['nome'].value,
       cpf: this.form.controls['cpf'].value,
       email: this.form.controls['email'].value,
@@ -114,14 +161,19 @@ export class AddPerdaComponent implements OnInit {
       colheitadata: this.form.controls['colheitaData'].value,
       eventoocorrido: this.form.controls['eventoOcorrido'].value,
     };
-    this.perdaService.create(data).subscribe(
-      response => {
-        console.log(response);
-        this.submitted = true;
-      },
-      error => {
-        console.log(error);
-      });
+    if (data.id == null) {
+      this.perdaService.create(data).subscribe(
+        response => {
+          console.log(response);
+          this.submitted = true;
+        },
+        error => {
+          console.log(error);
+        });
+    }
+    else{
+      this.updatePerda(data);
+    }
   }
 
   newPerda(): void {

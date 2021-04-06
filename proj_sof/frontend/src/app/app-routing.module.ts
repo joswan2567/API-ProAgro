@@ -9,7 +9,9 @@ const routes: Routes = [
   { path: 'perdas', component: PerdasListComponent },
   { path: 'perdas/:id', component: PerdaDetailsComponent },
   { path: 'perdas/:locLat,:locLng,:date', component: PerdaDetailsComponent },
-  { path: 'add', component: AddPerdaComponent }
+  { path: 'add', component: AddPerdaComponent },
+  { path:'add/:id', component:AddPerdaComponent}
+
 ];
 
 @NgModule({

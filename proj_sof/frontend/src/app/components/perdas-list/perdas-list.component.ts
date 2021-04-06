@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { PerdaService } from 'src/app/services/perda.service';
 import { PerdaCadastro } from 'src/app/models/perda.model';
+import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+
+
 @Component({
   selector: 'app-perdas-list',
   templateUrl: './perdas-list.component.html',
@@ -8,6 +15,8 @@ import { PerdaCadastro } from 'src/app/models/perda.model';
 })
 export class PerdasListComponent implements OnInit {
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  dataSource;
   displayedColumns: string[] = ['nome', 'cpf', 'colheitaData', 'colheitaTipo', 'actions'];
   perdas: PerdaCadastro[];
   currentPerda: PerdaCadastro | null;
@@ -17,10 +26,15 @@ export class PerdasListComponent implements OnInit {
   lat = 51.678418;
   lng = 7.809007;
 
-  constructor(private perdaService: PerdaService) { }
+  constructor(private router: Router, private activeRoute: ActivatedRoute, private perdaService: PerdaService,
+    private dialog: MatDialog) { }
 
-  ngOnInit(): void {
+  ngAfterViewInit() {
     this.retrievePerdas();
+
+  }
+  ngOnInit():void{
+
   }
 
   retrievePerdas(): void {
@@ -29,6 +43,8 @@ export class PerdasListComponent implements OnInit {
         data => {
           this.perdas = data;
           console.log(data);
+          this.dataSource = new MatTableDataSource<PerdaCadastro>(this.perdas);
+          this.dataSource.paginator = this.paginator;
         },
         error => {
           console.log(error);
@@ -56,8 +72,8 @@ export class PerdasListComponent implements OnInit {
         error => {
           console.log(error);
         });
-      this.currentPerda = null;
-      this.currentIndex = -1;
+    this.currentPerda = null;
+    this.currentIndex = -1;
   }
 
   searchCPF(): void {
@@ -72,7 +88,29 @@ export class PerdasListComponent implements OnInit {
         });
   }
 
-  delete(row){
-    console.log(row);
+  editPerda(data) {
+    this.router.navigate(['/add', { id: data.id }])
+    console.log(data);
+  }
+
+  deletePerda(data) {
+    const dialogRef = this.dialog.open(DialogDeleteComponent);
+    // this.router.navigate(['/add', { id: data.id }])
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.perdaService.delete(data.id)
+          .subscribe(
+            response => {
+              console.log(response);
+              window.location.reload();
+              // this.perdas.splice( this.perdas.findIndex(x=> x.id == data.id));
+            },
+            error => {
+              console.log(error);
+            });
+      }
+    });
+
+    console.log(data);
   }
 }

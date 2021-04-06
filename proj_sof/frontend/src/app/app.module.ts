@@ -25,7 +25,8 @@ import { DialogMapComponent } from './components/dialog-map/dialog-map.component
 import { AgmCoreModule } from '@agm/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatToolbarModule} from '@angular/material/toolbar';
-
+import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     PerdaDetailsComponent,
     PerdasListComponent,
     DialogErrorComponent,
-    DialogMapComponent
+    DialogMapComponent,
+    DialogDeleteComponent
   ],
   imports: [
     BrowserModule,
@@ -55,6 +57,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
     MatDialogModule,
     MatFormFieldModule,
     MatToolbarModule,
+    MatPaginatorModule,
     NgxMaskModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBcWwZUp2n5usm0Ae4_DJfQ30L3sCtBzko'

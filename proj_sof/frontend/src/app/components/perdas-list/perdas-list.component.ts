@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PerdaService } from 'src/app/services/perda.service';
 import { PerdaCadastro } from 'src/app/models/perda.model';
-import {animate, state, style, transition, trigger} from '@angular/animations';
-
 @Component({
   selector: 'app-perdas-list',
   templateUrl: './perdas-list.component.html',
@@ -72,5 +70,9 @@ export class PerdasListComponent implements OnInit {
         error => {
           console.log(error);
         });
+  }
+
+  delete(row){
+    console.log(row);
   }
 }

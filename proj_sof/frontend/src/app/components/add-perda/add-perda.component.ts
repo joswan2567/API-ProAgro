@@ -11,7 +11,6 @@ import { DialogMapComponent } from '../dialog-map/dialog-map.component';
   styleUrls: ['./add-perda.component.css'],
 })
 export class AddPerdaComponent implements OnInit {
-  customPatterns = { '0': { pattern: new RegExp('-?') }, '9': { pattern: new RegExp('[0-9]') }, };
   blockRegister: boolean = false;
   public form: FormGroup;
   startDate = new Date();
@@ -44,8 +43,8 @@ export class AddPerdaComponent implements OnInit {
       nome: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250)])],
       email: new FormControl(),
       cpf: new FormControl(),
-      latLocalizacao: new FormControl(),
-      lngLocalizacao: new FormControl(),
+      latLocalizacao: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
+      lngLocalizacao:[null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
       colheitaTipo: new FormControl(),
       colheitaData: new FormControl(),
       eventoOcorrido: new FormControl(),

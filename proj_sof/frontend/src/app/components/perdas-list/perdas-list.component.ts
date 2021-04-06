@@ -10,8 +10,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class PerdasListComponent implements OnInit {
 
-  displayedColumns: string[] = ['nome', 'cpf', 'colheitaData'];
-  columnsToDisplay: string[] = this.displayedColumns.slice();
+  displayedColumns: string[] = ['nome', 'cpf', 'colheitaData', 'colheitaTipo', 'actions'];
   perdas: PerdaCadastro[];
   currentPerda: PerdaCadastro | null;
   currentIndex = -1;

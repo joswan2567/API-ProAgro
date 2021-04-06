@@ -3,7 +3,9 @@
         <form [formGroup]="form">
             <div *ngIf="!submitted">
                 <div fxLayout="column">
-                    <mat-card-header><h3><strong>Novo Registro de Perda</strong></h3></mat-card-header>
+                    <mat-card-header>
+                        <h3><strong>Novo Registro de Perda</strong></h3>
+                    </mat-card-header>
                     <div fxLayout="row" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
 
                         <mat-form-field fxFlex="40" class="example-form-field">
@@ -31,7 +33,8 @@
 
                         <mat-form-field fxFlex="20">
                             <mat-label>CPF</mat-label>
-                            <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="Ex. 789.456.123-07" required />
+                            <input matInput formControlName="cpf" mask="000.000.000-00" placeholder="Ex. 789.456.123-07"
+                                required />
                             <mat-error
                                 *ngIf="(form.controls['cpf'].hasError('required') && form.controls['cpf'].touched) ">
                                 Campo necessário!
@@ -54,21 +57,31 @@
 
                         <mat-form-field fxFlex="25">
                             <mat-label>Latitude da Localização</mat-label>
-                            <input matInput type="text" formControlName="latLocalizacao" [patterns]="customPatterns"
-                                mask="099.999999" dropSpecialCharacters="false" placeholder="Ex. -17.456789" (blur)="checaVeracidade()" required />
+                            <input matInput type="text" formControlName="latLocalizacao" mask="separator.6"
+                                thousandSeparator="," [dropSpecialCharacters]="false" [allowNegativeNumbers]="true"
+                                placeholder="Ex. -17.456789" (blur)="checaVeracidade()" required />
                             <mat-error
                                 *ngIf="(form.controls['latLocalizacao'].hasError('required') && form.controls['latLocalizacao'].touched) ">
                                 Campo necessário!
+                            </mat-error>
+                            <mat-error
+                                *ngIf="(form.controls['latLocalizacao'].hasError('maxlength'))">
+                                Entra Inválida!
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field fxFlex="25">
                             <mat-label>Longitude da Localização</mat-label>
-                            <input matInput formControlName="lngLocalizacao" [patterns]="customPatterns"
-                                mask="099.999999" dropSpecialCharacters="false" placeholder="Ex. +34.784698" (blur)="checaVeracidade()" required />
+                            <input matInput formControlName="lngLocalizacao" mask="separator.6" thousandSeparator=","
+                                [dropSpecialCharacters]="false" [allowNegativeNumbers]="true"
+                                placeholder="Ex. 34.784698" (blur)="checaVeracidade()" required />
                             <mat-error
                                 *ngIf="(form.controls['lngLocalizacao'].hasError('required') && form.controls['lngLocalizacao'].touched) ">
                                 Campo necessário!
+                            </mat-error>
+                            <mat-error
+                                *ngIf="(form.controls['lngLocalizacao'].hasError('maxlength'))">
+                                Entra Inválida!
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -94,28 +107,28 @@
                                     {{evento}}
                                 </mat-option>
                             </mat-select>
-                                <mat-error
-                                    *ngIf="(form.controls['eventoOcorrido'].hasError('required') && form.controls['eventoOcorrido'].touched) ">
-                                    Campo necessário!
-                                </mat-error>
+                            <mat-error
+                                *ngIf="(form.controls['eventoOcorrido'].hasError('required') && form.controls['eventoOcorrido'].touched) ">
+                                Campo necessário!
+                            </mat-error>
                         </mat-form-field>
-                        
+
                     </div>
                 </div>
             </div>
         </form>
-        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" fxLayout.xs="column" style="margin-right: 20px;">
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" fxLayout.xs="column"
+            style="margin-right: 20px;">
 
-        <button mat-button (click)="newPerda()">Cancelar</button>
-        <button mat-button class="btn" [disabled]="blockRegister"
-                            (click)="savePerda()">Salvar</button>
+            <button mat-button (click)="newPerda()">Cancelar</button>
+            <button mat-button class="btn" [disabled]="blockRegister" (click)="savePerda()">Salvar</button>
         </div>
     </div>
     <div *ngIf="submitted">
         <h4>Registro Adicionado</h4>
         <button mat-button style="background-color: rgba(9,121,52,0.7287289915966386); color: white;"
-                            (click)="newPerda()">Novo Registro</button>
+            (click)="newPerda()">Novo Registro</button>
         <button mat-button style="background-color: rgba(9,121,52,0.7287289915966386); color: white;"
-                            (click)="savePerda()">Ver Perdas</button>
+            (click)="savePerda()">Ver Perdas</button>
     </div>
 </mat-card>

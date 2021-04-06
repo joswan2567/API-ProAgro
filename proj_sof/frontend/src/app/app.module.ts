@@ -6,7 +6,6 @@ import { NgxMaskModule } from 'ngx-mask';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddPerdaComponent } from './components/add-perda/add-perda.component';
-import { PerdaDetailsComponent } from './components/perda-details/perda-details.component';
 import { PerdasListComponent } from './components/perdas-list/perdas-list.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
@@ -18,25 +17,30 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { DialogErrorComponent } from './components/dialog-error/dialog-error.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DialogMapComponent } from './components/dialog-map/dialog-map.component';
 import { AgmCoreModule } from '@agm/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule} from '@angular/material/toolbar';
 import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { DatePipe } from '@angular/common';
+import { CPFPipe } from './components/cpf.pipe';
 
+registerLocaleData(localePt);
 @NgModule({
   declarations: [
     AppComponent,
     AddPerdaComponent,
-    PerdaDetailsComponent,
     PerdasListComponent,
     DialogErrorComponent,
     DialogMapComponent,
-    DialogDeleteComponent
+    DialogDeleteComponent,
+    CPFPipe
   ],
   imports: [
     BrowserModule,
@@ -67,7 +71,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' },],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }, DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,13 +1,45 @@
-agm-map, #map {
-    height: 300px;
+agm-map,
+#map {
+    height: 420px;
     width: 500px;
 }
-.card-perdas{
-    width: 1000px !important;
+
+.card-perdas {
+    width: 1150px;
     margin: auto;
 }
 
-.table-perdas{
+.table-perdas {
+    width: 600px;
     min-height: 300px;
-    min-width: 300px;
+    border: none !important;
+}
+
+mat-table {
+    table-layout: fixed;
+}
+
+mat-header-cell {
+    margin-right: 10px;
+}
+
+mat-paginator {
+    padding-right: 7%;
+}
+
+mat-header-cell,
+mat-cell {
+    display: flex;
+    justify-content: center;
+    white-space: nowrap;
+}
+
+.container-busca {
+    align-self: flex-end;
+}
+
+.container-busca h3 {
+    white-space: nowrap;
+    align-self: flex-end;
+    margin-right: 155px;
 }

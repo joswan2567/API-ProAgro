@@ -8,6 +8,9 @@ from .models import CadastroConflitante, PerdasCadastro
 from .serializers import CadastroConflitanteSerializer, PerdasCadastroSerializer
 from rest_framework.decorators import api_view
 import math
+from datetime import date, datetime, time
+
+from .utils import calc_dist
 
 
 @api_view(['GET', 'POST', 'DELETE'])
@@ -70,19 +73,25 @@ def perda_list_cpf(request, cpf):
 
 @api_view(['GET', 'POST'])
 def checa_veracidade(resquest):
+    data = JSONParser().parse(resquest)
+    date = data['colheitadata'].split('/')
+    id_data = 0 if data['id'] is None else int(data['id']) 
+
     if resquest.method == 'POST':
-        data = JSONParser().parse(resquest)
-        perdas = PerdasCadastro.objects.all()
+        perdas = PerdasCadastro.objects.filter(colheitadata__year = date[2],
+                                               colheitadata__month = date[1],
+                                               colheitadata__day = date[0]).exclude(id = id_data)
 
         for perda in perdas:
-            dist = 6371 * math.acos(math.cos(
-                math.radians(90-float(perda.loclat))) *
-                math.cos(math.radians(90-float(data['loclat']))) +
-                math.sin(math.radians(90-float(perda.loclat))) *
-                math.sin(math.radians(90-float(data['loclat']))) *
-                math.cos(math.radians(float(perda.loclng)-float(data['loclng']))) * 1.15)
-            # print(dist)
-            if dist >= 10:
+            dist = calc_dist(float(data['loclat']), 
+                             float(data['loclng']), 
+                             float(perda.loclat), 
+                             float(perda.loclng))
+            print(dist,float(data['loclat']), 
+                             float(data['loclng']), 
+                             float(perda.loclat), 
+                             float(perda.loclng) )
+            if dist <= 10:
                 cadastro_conflitante_serializer = CadastroConflitanteSerializer({"loclat": perda.loclat,
                                                                                  "loclng": perda.loclng,
                                                                                  "idConfl": perda.id,

@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -23,23 +24,23 @@ export class AddPerdaComponent implements OnInit {
     'Raio',
   ];
   colheitaTipos = ['Cebola',
+    'Trigo',
+    'Soja',
+    'Feijão',
+    'Arroz',
     'Banana',
     'Tomate',
     'Mandioca',
-    'Soja',
     'Batata',
-    'Trigo',
-    'Arroz',
     'Milho',
-    'Feijão',
     'Outra',
   ];
 
   submitted = false;
 
-  constructor(private router: Router, private activeRoute: ActivatedRoute, 
-    private perdaService: PerdaService, private formBuilder: FormBuilder, 
-    private dialog: MatDialog) { }
+  constructor(private router: Router, private activeRoute: ActivatedRoute,
+    private perdaService: PerdaService, private formBuilder: FormBuilder,
+    private dialog: MatDialog, private datepipe: DatePipe) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -59,19 +60,24 @@ export class AddPerdaComponent implements OnInit {
       this.form.controls['id'].setValue(id);
       this.getPerda(id);
     }
+
+    this.form.controls['colheitaData'].valueChanges.subscribe((value) => {
+      this.checaVeracidade();
+    })
   }
 
-  showOldRegister(latConflict, lngConflict) {
+  showOldRegister(id, latConflict, lngConflict) {
     const dialogRef = this.dialog.open(DialogMapComponent, {
       data: {
         latCurrent: parseFloat(this.form.controls['latLocalizacao'].value),
         lngCurrent: parseFloat(this.form.controls['lngLocalizacao'].value),
         latConflict: parseFloat(latConflict),
         lngConflict: parseFloat(lngConflict),
+        id: id,
       }
     });
     dialogRef.afterClosed().subscribe(result => {
-      if (result == null)
+      if (result)
         this.newPerda();
       else
         this.blockRegister = true;
@@ -115,14 +121,15 @@ export class AddPerdaComponent implements OnInit {
   }
 
   checaVeracidade() {
-    if ((this.form.controls['colheitaData'].value != null) &&
-      (this.form.controls['latLocalizacao'].value != null) &&
-      (this.form.controls['lngLocalizacao'].value != null)) {
+    if ((this.form.controls['colheitaData'].valid) &&
+      (this.form.controls['latLocalizacao'].valid) &&
+      (this.form.controls['lngLocalizacao'].valid)) {
       console.log('campos');
       const data = {
-        colheitadata: this.form.controls['colheitaData'].value,
+        colheitadata: this.datepipe.transform(this.form.controls['colheitaData'].value, 'dd/MM/yyyy'),
         loclat: this.form.controls['latLocalizacao'].value,
         loclng: this.form.controls['lngLocalizacao'].value,
+        id: this.form.controls['id'].value,
         nome: "",
         cpf: "",
         email: "",
@@ -133,9 +140,10 @@ export class AddPerdaComponent implements OnInit {
         response => {
           console.log(response);
           if (response != null) {
-            // this.submitted = true;
-            this.showOldRegister(response.loclat, response.loclng);
+            this.showOldRegister(response.idConfl, response.loclat, response.loclng);
           }
+          else
+            this.blockRegister = false;
         },
         error => {
           console.log(error);
@@ -179,7 +187,7 @@ export class AddPerdaComponent implements OnInit {
   newPerda(): void {
     // this.submitted = false;
     this.form.disable();
-    window.location.reload();
+    this.router.navigate(['/perdas'], {relativeTo:this.activeRoute});
   }
 
 }

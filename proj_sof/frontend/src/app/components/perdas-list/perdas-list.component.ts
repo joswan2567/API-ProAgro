@@ -4,8 +4,9 @@ import { PerdaCadastro } from 'src/app/models/perda.model';
 import { ActivatedRoute, Router, RouterLinkWithHref } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component';
-import { MatPaginator } from '@angular/material/paginator';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 
 
 @Component({
@@ -16,15 +17,23 @@ import { MatTableDataSource } from '@angular/material/table';
 export class PerdasListComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   dataSource;
   displayedColumns: string[] = ['nome', 'cpf', 'colheitaData', 'colheitaTipo', 'actions'];
   perdas: PerdaCadastro[];
   currentPerda: PerdaCadastro | null;
   currentIndex = -1;
-  cpf = '';
+  cpf = "";
 
   lat = 51.678418;
   lng = 7.809007;
+
+  // MatPaginator Inputs
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  // MatPaginator Output
+  pageEvent: PageEvent;
 
   constructor(private router: Router, private activeRoute: ActivatedRoute, private perdaService: PerdaService,
     private dialog: MatDialog) { }
@@ -33,8 +42,17 @@ export class PerdasListComponent implements OnInit {
     this.retrievePerdas();
 
   }
-  ngOnInit():void{
+  ngOnInit(): void {
 
+  }
+  searchCPF() {
+    // if(this.)
+    const filterValue = this.cpf;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
   retrievePerdas(): void {
@@ -45,6 +63,8 @@ export class PerdasListComponent implements OnInit {
           console.log(data);
           this.dataSource = new MatTableDataSource<PerdaCadastro>(this.perdas);
           this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+
         },
         error => {
           console.log(error);
@@ -76,17 +96,17 @@ export class PerdasListComponent implements OnInit {
     this.currentIndex = -1;
   }
 
-  searchCPF(): void {
-    this.perdaService.findByCPF(this.cpf)
-      .subscribe(
-        data => {
-          this.perdas = data;
-          console.log(data);
-        },
-        error => {
-          console.log(error);
-        });
-  }
+  // searchCPF(): void {
+  //   this.perdaService.findByCPF(this.cpf)
+  //     .subscribe(
+  //       data => {
+  //         this.perdas = data;
+  //         console.log(data);
+  //       },
+  //       error => {
+  //         console.log(error);
+  //       });
+  // }
 
   editPerda(data) {
     this.router.navigate(['/add', { id: data.id }])

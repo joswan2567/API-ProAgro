@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
+  id: number;
   latCurrent: number;
   lngCurrent: number;
   latConflict: number;
@@ -36,6 +37,10 @@ export class DialogMapComponent implements OnInit {
   takeMap(map) {
     this.map = map;
     this.initMap();
+  }
+
+  readRegistro(){
+    window.open(`/add/${this.data.id}`);
   }
 
   public async initMap() {

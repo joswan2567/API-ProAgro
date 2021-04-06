@@ -1,6 +1,6 @@
 <h1 mat-dialog-title><strong>Registro Conflitante</strong></h1>
 <p>Existe um registro a {{dist}} kms de distância da localização inserida nesse novo registro.<p>
-<button mat-button>Ver Registro</button>
+<button mat-button (click)="readRegistro()">Ver Registro</button>
 <mat-dialog-content>
     <agm-map id="map" [latitude]="lat" [longitude]="lng" (mapReady)="takeMap($event)">
         <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
@@ -8,6 +8,6 @@
 </mat-dialog-content>
 <p>Você pode cancelar a inserção do novo registro, ou alterar os dados desse novo registro.<p>
 <mat-dialog-actions align="end">
-    <button fxLayoutAlign="end" mat-button mat-dialog-close>Cancelar Novo Registro</button>
-    <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Alterar Dados</button>
+    <button fxLayoutAlign="end" mat-button [mat-dialog-close]="true">Cancelar Novo Registro</button>
+    <button mat-button [mat-dialog-close]="false" cdkFocusInitial>Alterar Dados</button>
 </mat-dialog-actions>

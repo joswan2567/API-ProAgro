@@ -4,10 +4,11 @@
     <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
   </agm-map>
   <div class="container-table" fxLayout="column" fxLayoutAlign="start start">
-    <div fxLayout="row" fxLayoutAlign="space-evenly center">
-      <mat-form-field fxFlex="60" fxLayout="column" fxLayoutGap="20px" fxLayout.xs="column">
+    <div fxLayout="row" class="container-busca" fxLayoutAlign="space-evenly center">
+      <h3><strong>Registros de Perda</strong></h3>
+      <mat-form-field fxFlex="30" fxLayout="column" fxLayoutGap="20px" fxLayout.xs="column">
         <mat-label>Busca por CPF</mat-label>
-        <input type="text" [value]="cpf" matInput mask="000.000.00-00" placeholder="Ex. 123.456.79-10">
+        <input type="text" [(ngModel)]="cpf" matInput mask="000.000.00-00" placeholder="Ex. 123.456.79-10">
       </mat-form-field>
       <div class="input-group-append">
         <button mat-button color="primary" class="btn btn-outline-secondary" type="button" (click)="searchCPF()">
@@ -15,46 +16,48 @@
         </button>
       </div>
     </div>
-    <div class="mat-elevation-z8">
-    <mat-table [dataSource]="perdas" class="mat-elevation-z8">
-      <!-- Position Column -->
-      <ng-container matColumnDef="nome">
-        <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.nome}} </mat-cell>
-      </ng-container>
+    <div class="mat-elevation-z0">
+      <mat-table class="table-perdas" [dataSource]="dataSource">
+        <ng-container matColumnDef="nome">
+          <mat-header-cell *matHeaderCellDef> Nome </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.nome}} </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="cpf">
-        <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.cpf}} </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="cpf">
+          <mat-header-cell *matHeaderCellDef> CPF </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.cpf | CPF}} </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="colheitaData">
-        <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.colheitadata | date: 'dd/MM/yyyy' }} </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="colheitaData">
+          <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.colheitadata | date: 'dd/MM/yyyy' }} </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="colheitaTipo">
-        <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
-        <mat-cell *matCellDef="let element"> {{element.colheitatipo}} </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="colheitaTipo">
+          <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.colheitatipo}} </mat-cell>
+        </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <button (click)="editPerda(row)" mat-icon-button style="color: rgba(9,121,52,0.7287289915966386);">
-            <mat-icon>edit</mat-icon>
-          </button>
-          <button (click)="deletePerda(row)" mat-icon-button color="error">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Ações </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <button (click)="editPerda(row)" mat-icon-button style="color: rgba(9,121,52,0.7287289915966386);">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="deletePerda(row)" mat-icon-button color="error">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-    </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </div>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">Sem dados Compatíveis</td>
+        </tr>
+      </mat-table>
+      <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+    </div>
   </div>
 </mat-card>
 

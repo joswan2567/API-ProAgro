@@ -1,1 +1,1 @@
-web: node dist/server.js
+web: gunicorn backend.wsgi --log-file –

@@ -24,7 +24,7 @@ export class DialogMapComponent implements OnInit {
   makerRegistroOld: google.maps.Marker;
   poly: google.maps.Polyline;
   teste: string;
-  dist;
+  dist: number;
 
   constructor(
     public dialogRef: MatDialogRef<DialogMapComponent>,
@@ -44,7 +44,7 @@ export class DialogMapComponent implements OnInit {
   }
 
   public async initMap() {
-    this.dist = this.data.dist;
+    this.dist = parseFloat(this.data.dist.toFixed(3));
     let mapOptions = {
       zoom: 13,
       mapTypeId: 'hybrid',
@@ -68,6 +68,7 @@ export class DialogMapComponent implements OnInit {
     this.makerRegistroCurrent = await this.geraMarker(this.data.latCurrent, this.data.lngCurrent);
     // this.makerRegistroCurrent = await this.geraMarker(52.456789, 9.478596);
     this.makerRegistroCurrent.setMap(this.map);
+    this.makerRegistroCurrent.setOpacity(0.5);
 
     this.poly.getPath().push(this.makerRegistroCurrent.getPosition());
 

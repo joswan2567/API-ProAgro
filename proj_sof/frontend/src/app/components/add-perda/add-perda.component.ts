@@ -47,11 +47,11 @@ export class AddPerdaComponent implements OnInit {
       nome: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(250)])],
       email: new FormControl(),
       cpf: new FormControl(),
-      latLocalizacao: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
-      lngLocalizacao: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
-      colheitaTipo: new FormControl(),
-      colheitaData: new FormControl(),
-      eventoOcorrido: new FormControl(),
+      loclat: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
+      loclng: [null, Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(10)])],
+      colheitatipo: new FormControl(),
+      colheitadata: new FormControl(),
+      eventoocorrido: new FormControl(),
       id: new FormControl()
     });
 
@@ -61,18 +61,19 @@ export class AddPerdaComponent implements OnInit {
       this.getPerda(id);
     }
 
-    this.form.controls['colheitaData'].valueChanges.subscribe((value) => {
+    this.form.controls['colheitadata'].valueChanges.subscribe((value) => {
       this.checaVeracidade();
     })
   }
 
-  showOldRegister(id, latConflict, lngConflict) {
+  showOldRegister(id, latConflict, lngConflict, dist) {
     const dialogRef = this.dialog.open(DialogMapComponent, {
       data: {
-        latCurrent: parseFloat(this.form.controls['latLocalizacao'].value),
-        lngCurrent: parseFloat(this.form.controls['lngLocalizacao'].value),
+        latCurrent: parseFloat(this.form.controls['loclat'].value),
+        lngCurrent: parseFloat(this.form.controls['loclng'].value),
         latConflict: parseFloat(latConflict),
         lngConflict: parseFloat(lngConflict),
+        dist: parseFloat(dist),
         id: id,
       }
     });
@@ -113,22 +114,22 @@ export class AddPerdaComponent implements OnInit {
     this.form.controls['nome'].setValue(data.nome);
     this.form.controls['cpf'].setValue(data.cpf);
     this.form.controls['email'].setValue(data.email);
-    this.form.controls['latLocalizacao'].setValue(data.loclat);
-    this.form.controls['lngLocalizacao'].setValue(data.loclng);
-    this.form.controls['eventoOcorrido'].setValue(data.eventoocorrido);
-    this.form.controls['colheitaData'].setValue(data.colheitadata);
-    this.form.controls['colheitaTipo'].setValue(data.colheitatipo);
+    this.form.controls['loclat'].setValue(data.loclat);
+    this.form.controls['loclng'].setValue(data.loclng);
+    this.form.controls['eventoocorrido'].setValue(data.eventoocorrido);
+    this.form.controls['colheitadata'].setValue(data.colheitadata);
+    this.form.controls['colheitatipo'].setValue(data.colheitatipo);
   }
 
   checaVeracidade() {
-    if ((this.form.controls['colheitaData'].valid) &&
-      (this.form.controls['latLocalizacao'].valid) &&
-      (this.form.controls['lngLocalizacao'].valid)) {
+    if ((this.form.controls['colheitadata'].valid) &&
+      (this.form.controls['loclat'].valid) &&
+      (this.form.controls['loclng'].valid)) {
       console.log('campos');
       const data = {
-        colheitadata: this.datepipe.transform(this.form.controls['colheitaData'].value, 'dd/MM/yyyy'),
-        loclat: this.form.controls['latLocalizacao'].value,
-        loclng: this.form.controls['lngLocalizacao'].value,
+        colheitadata: this.datepipe.transform(this.form.controls['colheitadata'].value, 'dd/MM/yyyy'),
+        loclat: this.form.controls['loclat'].value,
+        loclng: this.form.controls['loclng'].value,
         id: this.form.controls['id'].value,
         nome: "",
         cpf: "",
@@ -140,7 +141,7 @@ export class AddPerdaComponent implements OnInit {
         response => {
           console.log(response);
           if (response != null) {
-            this.showOldRegister(response.idConfl, response.loclat, response.loclng);
+            this.showOldRegister(response.idConfl, response.loclat, response.loclng, response.dist);
           }
           else
             this.blockRegister = false;
@@ -163,11 +164,11 @@ export class AddPerdaComponent implements OnInit {
       nome: this.form.controls['nome'].value,
       cpf: this.form.controls['cpf'].value,
       email: this.form.controls['email'].value,
-      loclat: this.form.controls['latLocalizacao'].value,
-      loclng: this.form.controls['lngLocalizacao'].value,
-      colheitatipo: this.form.controls['colheitaTipo'].value,
-      colheitadata: this.form.controls['colheitaData'].value,
-      eventoocorrido: this.form.controls['eventoOcorrido'].value,
+      loclat: this.form.controls['loclat'].value,
+      loclng: this.form.controls['loclng'].value,
+      colheitatipo: this.form.controls['colheitatipo'].value,
+      colheitadata: this.form.controls['colheitadata'].value,
+      eventoocorrido: this.form.controls['eventoocorrido'].value,
     };
     if (data.id == null) {
       this.perdaService.create(data).subscribe(
@@ -187,8 +188,11 @@ export class AddPerdaComponent implements OnInit {
   newPerda(): void {
     // this.submitted = false;
     this.form.disable();
-    // this.router.navigate(['/add'], { relativeTo: this.activeRoute });
-    window.location.reload();
+    if (this.form.controls['id'].value != null) {
+      this.router.navigate(['/perdas'], { relativeTo: this.activeRoute });
+    }
+    else
+      window.location.reload();
   }
 
   routeRegistro() {

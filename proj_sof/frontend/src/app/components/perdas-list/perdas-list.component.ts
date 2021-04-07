@@ -22,7 +22,7 @@ export class PerdasListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   dataSource;
-  displayedColumns: string[] = ['nome', 'cpf', 'colheitaData', 'colheitaTipo', 'actions'];
+  displayedColumns: string[] = ['nome', 'cpf', 'colheitadata', 'colheitatipo', 'actions'];
   perdas: PerdaCadastro[];
   currentPerda: PerdaCadastro | null;
   currentIndex = -1;
@@ -140,6 +140,7 @@ export class PerdasListComponent implements OnInit {
 
   takeMap(map) {
     this.map = map;
+    this.map.setZoom(1);
     // this.teste.initMap();
   }
 

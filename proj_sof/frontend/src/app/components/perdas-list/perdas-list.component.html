@@ -33,12 +33,12 @@
           <mat-cell *matCellDef="let element"> {{element.cpf | CPF}} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="colheitaData">
+        <ng-container matColumnDef="colheitadata">
           <mat-header-cell *matHeaderCellDef> Data </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.colheitadata | date: 'dd/MM/yyyy' }} </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="colheitaTipo">
+        <ng-container matColumnDef="colheitatipo">
           <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.colheitatipo}} </mat-cell>
         </ng-container>

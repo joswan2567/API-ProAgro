@@ -45,40 +45,40 @@
 
                         <mat-form-field fxFlex="35">
                             <mat-label disabled="false">Data da colheita</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="colheitaData"
+                            <input matInput [matDatepicker]="picker" formControlName="colheitadata"
                                 ui-date-mask="DD-MM-YYYY" (blur)="checaVeracidade()" disabled required>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker disabled="false"></mat-datepicker>
                             <mat-error
-                                *ngIf="(form.controls['colheitaData'].hasError('required') && form.controls['colheitaData'].touched) ">
+                                *ngIf="(form.controls['colheitadata'].hasError('required') && form.controls['colheitadata'].touched) ">
                                 Campo necessário!
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field fxFlex="25">
                             <mat-label>Latitude da Localização</mat-label>
-                            <input matInput type="text" formControlName="latLocalizacao" mask="separator.6"
+                            <input matInput type="text" formControlName="loclat" mask="separator.6"
                                 thousandSeparator="," [dropSpecialCharacters]="false" [allowNegativeNumbers]="true"
                                 placeholder="Ex. -17.456789" (blur)="checaVeracidade()" required />
                             <mat-error
-                                *ngIf="(form.controls['latLocalizacao'].hasError('required') && form.controls['latLocalizacao'].touched) ">
+                                *ngIf="(form.controls['loclat'].hasError('required') && form.controls['loclat'].touched) ">
                                 Campo necessário!
                             </mat-error>
-                            <mat-error *ngIf="(form.controls['latLocalizacao'].hasError('maxlength'))">
+                            <mat-error *ngIf="(form.controls['loclat'].hasError('maxlength'))">
                                 Entra Inválida!
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field fxFlex="25">
                             <mat-label>Longitude da Localização</mat-label>
-                            <input matInput formControlName="lngLocalizacao" mask="separator.6" thousandSeparator=","
+                            <input matInput formControlName="loclng" mask="separator.6" thousandSeparator=","
                                 [dropSpecialCharacters]="false" [allowNegativeNumbers]="true"
                                 placeholder="Ex. 34.784698" (blur)="checaVeracidade()" required />
                             <mat-error
-                                *ngIf="(form.controls['lngLocalizacao'].hasError('required') && form.controls['lngLocalizacao'].touched) ">
+                                *ngIf="(form.controls['loclng'].hasError('required') && form.controls['loclng'].touched) ">
                                 Campo necessário!
                             </mat-error>
-                            <mat-error *ngIf="(form.controls['lngLocalizacao'].hasError('maxlength'))">
+                            <mat-error *ngIf="(form.controls['loclng'].hasError('maxlength'))">
                                 Entra Inválida!
                             </mat-error>
                         </mat-form-field>
@@ -87,26 +87,26 @@
                     <div fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="20px" fxLayout.xs="column">
                         <mat-form-field fxFlex="45">
                             <mat-label>Tipo Colheita</mat-label>
-                            <mat-select formControlName="colheitaTipo" required>
-                                <mat-option *ngFor="let colheitaTipo of colheitaTipos" [value]="colheitaTipo">
-                                    {{colheitaTipo}}
+                            <mat-select formControlName="colheitatipo" required>
+                                <mat-option *ngFor="let colheitatipo of colheitaTipos" [value]="colheitatipo">
+                                    {{colheitatipo}}
                                 </mat-option>
                             </mat-select>
                             <mat-error
-                                *ngIf="(form.controls['colheitaTipo'].hasError('required') && form.controls['colheitaTipo'].touched) ">
+                                *ngIf="(form.controls['colheitatipo'].hasError('required') && form.controls['colheitatipo'].touched) ">
                                 Campo necessário!
                             </mat-error>
                         </mat-form-field>
 
                         <mat-form-field fxFlex="45">
                             <mat-label>Evento Ocorrido</mat-label>
-                            <mat-select formControlName="eventoOcorrido" required>
+                            <mat-select formControlName="eventoocorrido" required>
                                 <mat-option *ngFor="let evento of eventos" [value]="evento">
                                     {{evento}}
                                 </mat-option>
                             </mat-select>
                             <mat-error
-                                *ngIf="(form.controls['eventoOcorrido'].hasError('required') && form.controls['eventoOcorrido'].touched) ">
+                                *ngIf="(form.controls['eventoocorrido'].hasError('required') && form.controls['eventoocorrido'].touched) ">
                                 Campo necessário!
                             </mat-error>
                         </mat-form-field>

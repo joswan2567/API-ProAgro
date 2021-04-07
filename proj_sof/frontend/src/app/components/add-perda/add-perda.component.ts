@@ -78,7 +78,7 @@ export class AddPerdaComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result)
-        this.newPerda();
+        this.router.navigate(['/perdas'], { relativeTo: this.activeRoute });
       else
         this.blockRegister = true;
     });
@@ -101,7 +101,7 @@ export class AddPerdaComponent implements OnInit {
         response => {
           console.log(response);
           console.log('O registro foi atualizado!');
-          this.router.navigate(['/perdas'], {relativeTo:this.activeRoute});
+          this.router.navigate(['/perdas'], { relativeTo: this.activeRoute });
           this.submitted = true;
         },
         error => {
@@ -179,7 +179,7 @@ export class AddPerdaComponent implements OnInit {
           console.log(error);
         });
     }
-    else{
+    else {
       this.updatePerda(data);
     }
   }
@@ -187,7 +187,11 @@ export class AddPerdaComponent implements OnInit {
   newPerda(): void {
     // this.submitted = false;
     this.form.disable();
-    this.router.navigate(['/perdas'], {relativeTo:this.activeRoute});
+    // this.router.navigate(['/add'], { relativeTo: this.activeRoute });
+    window.location.reload();
   }
 
+  routeRegistro() {
+    this.router.navigate(['/perdas'], { relativeTo: this.activeRoute });
+  }
 }

@@ -7,6 +7,7 @@ import { DialogDeleteComponent } from '../dialog-delete/dialog-delete.component'
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class PerdasListComponent implements OnInit {
   perdas: PerdaCadastro[];
   currentPerda: PerdaCadastro | null;
   currentIndex = -1;
-  cpf = "";
+  public form: FormGroup;
 
   lat = 51.678418;
   lng = 7.809007;
@@ -36,18 +37,27 @@ export class PerdasListComponent implements OnInit {
   pageEvent: PageEvent;
 
   constructor(private router: Router, private activeRoute: ActivatedRoute, private perdaService: PerdaService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog, private formBuilder: FormBuilder) { }
 
   ngAfterViewInit() {
     this.retrievePerdas();
 
   }
   ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      cpf: new FormControl(),
+    });
+
+    this.form.controls['cpf'].valueChanges.subscribe((value) => {
+      if(value == "")
+        this.searchCPF();
+    })
 
   }
   searchCPF() {
-    // if(this.)
-    const filterValue = this.cpf;
+    if(this.form.controls['cpf'].invalid)
+      return;
+    const filterValue = this.form.controls['cpf'].value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
     if (this.dataSource.paginator) {

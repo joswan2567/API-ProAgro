@@ -64,8 +64,7 @@
                                 *ngIf="(form.controls['latLocalizacao'].hasError('required') && form.controls['latLocalizacao'].touched) ">
                                 Campo necessário!
                             </mat-error>
-                            <mat-error
-                                *ngIf="(form.controls['latLocalizacao'].hasError('maxlength'))">
+                            <mat-error *ngIf="(form.controls['latLocalizacao'].hasError('maxlength'))">
                                 Entra Inválida!
                             </mat-error>
                         </mat-form-field>
@@ -79,8 +78,7 @@
                                 *ngIf="(form.controls['lngLocalizacao'].hasError('required') && form.controls['lngLocalizacao'].touched) ">
                                 Campo necessário!
                             </mat-error>
-                            <mat-error
-                                *ngIf="(form.controls['lngLocalizacao'].hasError('maxlength'))">
+                            <mat-error *ngIf="(form.controls['lngLocalizacao'].hasError('maxlength'))">
                                 Entra Inválida!
                             </mat-error>
                         </mat-form-field>
@@ -112,23 +110,22 @@
                                 Campo necessário!
                             </mat-error>
                         </mat-form-field>
-
                     </div>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" fxLayout.xs="column"
+                    style="margin-right: 20px;">
+
+                    <button class="btn-error" mat-button (click)="newPerda()">Cancelar</button>
+                    <button mat-button class="btn" [disabled]="blockRegister" (click)="savePerda()">Salvar</button>
                 </div>
             </div>
         </form>
-        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px" fxLayout.xs="column"
-            style="margin-right: 20px;">
-
-            <button mat-button (click)="newPerda()">Cancelar</button>
-            <button mat-button class="btn" [disabled]="blockRegister" (click)="savePerda()">Salvar</button>
-        </div>
     </div>
     <div *ngIf="submitted">
         <h4>Registro Adicionado</h4>
         <button mat-button style="background-color: rgba(9,121,52,0.7287289915966386); color: white;"
             (click)="newPerda()">Novo Registro</button>
         <button mat-button style="background-color: rgba(9,121,52,0.7287289915966386); color: white;"
-            (click)="savePerda()">Ver Perdas</button>
+            (click)="routeRegistro()">Ver Perdas</button>
     </div>
 </mat-card>

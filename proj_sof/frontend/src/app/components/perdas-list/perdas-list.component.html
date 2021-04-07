@@ -1,6 +1,6 @@
 <mat-card class="card-perdas" fxLayoutAlign="center start">
-  <!-- <agm-map id="map" [latitude]="lat" [longitude]="lng" (mapReady)="takeMap($event)"> -->
-  <agm-map id="map" [latitude]="lat" [longitude]="lng">
+  <agm-map id="map" [latitude]="lat" [longitude]="lng" (mapReady)="takeMap($event)">
+  <!-- <agm-map id="map" [latitude]="lat" [longitude]="lng"> -->
     <!-- <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker> -->
   </agm-map>
   <div class="container-table" fxLayout="column" fxLayoutAlign="start start">
@@ -51,6 +51,9 @@
             </button>
             <button (click)="deletePerda(row)" mat-icon-button color="error">
               <mat-icon>delete</mat-icon>
+            </button>
+            <button (click)="viewMarker(row)" mat-icon-button color="error" style="color: dodgerblue;">
+              <mat-icon>visibility</mat-icon>
             </button>
           </mat-cell>
         </ng-container>

@@ -30,6 +30,7 @@ import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';
 import { CPFPipe } from './components/cpf.pipe';
+import { MapsUtilsComponent } from './maps-utils/maps-utils.component';
 
 registerLocaleData(localePt);
 @NgModule({
@@ -40,7 +41,8 @@ registerLocaleData(localePt);
     DialogErrorComponent,
     DialogMapComponent,
     DialogDeleteComponent,
-    CPFPipe
+    CPFPipe,
+    MapsUtilsComponent
   ],
   imports: [
     BrowserModule,
@@ -71,7 +73,7 @@ registerLocaleData(localePt);
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }, DatePipe],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }, DatePipe, MapsUtilsComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,6 +8,8 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { DialogMapComponent } from '../dialog-map/dialog-map.component';
+import { MapsUtilsComponent } from 'src/app/maps-utils/maps-utils.component';
 
 
 @Component({
@@ -36,8 +38,13 @@ export class PerdasListComponent implements OnInit {
   // MatPaginator Output
   pageEvent: PageEvent;
 
+  //Map
+  map: google.maps.Map;
+  makerRegistroCurrent: google.maps.Marker;
+  markers = [];
+
   constructor(private router: Router, private activeRoute: ActivatedRoute, private perdaService: PerdaService,
-    private dialog: MatDialog, private formBuilder: FormBuilder) { }
+    private dialog: MatDialog, private formBuilder: FormBuilder, private mapUtil: MapsUtilsComponent) { }
 
   ngAfterViewInit() {
     this.retrievePerdas();
@@ -49,13 +56,12 @@ export class PerdasListComponent implements OnInit {
     });
 
     this.form.controls['cpf'].valueChanges.subscribe((value) => {
-      if(value == "")
+      if (value == "")
         this.searchCPF();
     })
-
   }
   searchCPF() {
-    if(this.form.controls['cpf'].invalid)
+    if (this.form.controls['cpf'].invalid)
       return;
     const filterValue = this.form.controls['cpf'].value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -74,7 +80,7 @@ export class PerdasListComponent implements OnInit {
           this.dataSource = new MatTableDataSource<PerdaCadastro>(this.perdas);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
-
+          this.geraMarkers(data);
         },
         error => {
           console.log(error);
@@ -106,18 +112,6 @@ export class PerdasListComponent implements OnInit {
     this.currentIndex = -1;
   }
 
-  // searchCPF(): void {
-  //   this.perdaService.findByCPF(this.cpf)
-  //     .subscribe(
-  //       data => {
-  //         this.perdas = data;
-  //         console.log(data);
-  //       },
-  //       error => {
-  //         console.log(error);
-  //       });
-  // }
-
   editPerda(data) {
     this.router.navigate(['/add', { id: data.id }])
     console.log(data);
@@ -142,5 +136,22 @@ export class PerdasListComponent implements OnInit {
     });
 
     console.log(data);
+  }
+
+  takeMap(map) {
+    this.map = map;
+    // this.teste.initMap();
+  }
+
+  async geraMarkers(data) {
+    for (let i = 0; i < data.length; i++) {
+      var marker = await this.mapUtil.geraMarker(parseFloat(data[1]['loclat']), parseFloat(data[i]['loclng']), this.map);
+      this.markers.push(marker);
+      this.map.panTo(marker.getPosition());
+    }
+  }
+
+  viewMarker(data){
+    this.map.panTo(this.markers[this.perdas.indexOf(data)].getPosition());
   }
 }

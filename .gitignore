@@ -1,4 +1,4 @@
-# /dist/
 /node_modules/
 *.pyc
 __pycache__/
+.env

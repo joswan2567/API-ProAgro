@@ -1,2 +1,2 @@
-cd /proj_sof/backend
-web: gunicorn backend.wsgi --log-file -
+
+web: cd proj_sof/backend $$ gunicorn backend.wsgi --log-file -

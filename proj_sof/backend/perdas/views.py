@@ -12,7 +12,6 @@ from datetime import date, datetime, time
 
 from .utils import calc_dist
 
-
 @api_view(['GET', 'POST', 'DELETE'])
 def perda_list(request):
     if request.method == 'GET':

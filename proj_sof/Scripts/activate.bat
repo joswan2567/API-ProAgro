@@ -1,6 +1,6 @@
 @echo off
 
-set "VIRTUAL_ENV=G:\Documentos\Programacao\Python\Projeto SoftFocus\proj_sof"
+set "VIRTUAL_ENV=C:\Users\COAGI\Documents\Radocc\Projetos\Proj\proj_sof"
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

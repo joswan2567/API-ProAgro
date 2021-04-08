@@ -46,7 +46,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV='G:\Documentos\Programacao\Python\Projeto SoftFocus\proj_sof'
+VIRTUAL_ENV='C:\Users\COAGI\Documents\Radocc\Projetos\Proj\proj_sof'
 if ([ "$OSTYPE" = "cygwin" ] || [ "$OSTYPE" = "msys" ]) && $(command -v cygpath &> /dev/null) ; then
     VIRTUAL_ENV=$(cygpath -u "$VIRTUAL_ENV")
 fi

@@ -11,10 +11,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="{% static 'ang/favicon.ico' %}">
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'ang/styles.css' %}">
 </head>
 
-<body>
+<body style="background: url({% static 'ang/assets/images/img_lavoura.png' %});
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  --webkit-background-size: cover;
+  text-align: center;
+  height: 100vh;">
 	<app-root></app-root>
 	<script type="text/javascript" src="{% static 'ang/runtime.js' %}"></script>
 	<script type="text/javascript" src="{% static 'ang/polyfills.js' %}"></script>
@@ -22,4 +29,4 @@
 </body>
 
 </html>
-© 2021 GitHub, Inc.
+{% comment %} © 2021 GitHub, Inc. {% endcomment %}

@@ -152,7 +152,13 @@ export class PerdasListComponent implements OnInit {
     }
   }
 
-  viewMarker(data){
-    this.map.panTo(this.markers[this.perdas.indexOf(data)].getPosition());
+  viewMarker(data) {
+    var index = this.perdas.indexOf(data);
+    this.map.panTo(this.markers[index].getPosition());
+    this.markers[index].setAnimation(google.maps.Animation.BOUNCE);
+    var mi = this;
+    setTimeout(function () {
+      mi.markers[index].setAnimation(null);
+    }, 750);
   }
 }

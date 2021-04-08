@@ -1,7 +1,8 @@
-<mat-card style="width: 50%; min-height: 250px; margin: auto;">
+<mat-card class="container-main">
     <div style="margin: auto;" class="submit-form">
         <form [formGroup]="form">
-            <div *ngIf="!submitted">
+            <!--<div *ngIf="!submitted"> -->
+            <div >
                 <div fxLayout="column">
                     <mat-card-header>
                         <h3><strong>Novo Registro de Perda</strong></h3>
@@ -23,12 +24,15 @@
 
                         <mat-form-field fxFlex="30" fxLayout="column" fxLayoutGap="20px" fxLayout.xs="column">
                             <mat-label>Email</mat-label>
-                            <input type="email" formControlName="email" matInput [errorStateMatcher]="matcher"
+                            <input type="email" formControlName="email" matInput
                                 [email]="true" placeholder="Ex. pat@example.com" required>
                             <mat-error
                                 *ngIf="(form.controls['email'].hasError('required') && form.controls['email'].touched) ">
                                 Campo necessário!
                             </mat-error>
+                            <!-- <mat-error *ngIf="(form.controls['email'].invalid)">
+                                Email Inválido!
+                            </mat-error> -->
                         </mat-form-field>
 
                         <mat-form-field fxFlex="20">
@@ -65,7 +69,7 @@
                                 Campo necessário!
                             </mat-error>
                             <mat-error *ngIf="(form.controls['loclat'].hasError('maxlength'))">
-                                Entra Inválida!
+                                Entrada Inválida!
                             </mat-error>
                         </mat-form-field>
 
@@ -121,11 +125,11 @@
             </div>
         </form>
     </div>
-    <div *ngIf="submitted">
+    <!-- <div *ngIf="submitted">
         <h4>Registro Adicionado</h4>
         <button mat-button style="background-color: rgba(9,121,52,0.7287289915966386); color: white;"
             (click)="newPerda()">Novo Registro</button>
         <button mat-button style="background-color: rgba(9,121,52,0.7287289915966386); color: white;"
             (click)="routeRegistro()">Ver Perdas</button>
-    </div>
+    </div> -->
 </mat-card>

@@ -14,6 +14,7 @@ import { DialogMapComponent } from '../dialog-map/dialog-map.component';
 })
 export class AddPerdaComponent implements OnInit {
   blockRegister: boolean = false;
+  checkVeracidade:boolean = false;
   public form: FormGroup;
   startDate = new Date();
   eventos = ['Chuva Excessiva',
@@ -122,6 +123,8 @@ export class AddPerdaComponent implements OnInit {
   }
 
   checaVeracidade() {
+    if(this.checkVeracidade)
+      return;
     if ((this.form.controls['colheitadata'].valid) &&
       (this.form.controls['loclat'].valid) &&
       (this.form.controls['loclng'].valid)) {
@@ -139,6 +142,7 @@ export class AddPerdaComponent implements OnInit {
       };
       this.perdaService.checaVerac(data).subscribe(
         response => {
+          this.checkVeracidade = false;
           console.log(response);
           if (response != null) {
             this.showOldRegister(response.idConfl, response.loclat, response.loclng, response.dist);
@@ -174,6 +178,8 @@ export class AddPerdaComponent implements OnInit {
       this.perdaService.create(data).subscribe(
         response => {
           console.log(response);
+          console.log('O registro foi salvo!');
+          this.router.navigate(['/perdas'], { relativeTo: this.activeRoute });
           this.submitted = true;
         },
         error => {

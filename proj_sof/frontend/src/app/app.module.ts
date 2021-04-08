@@ -25,7 +25,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { DialogMapComponent } from './components/dialog-map/dialog-map.component';
 import { AgmCoreModule } from '@agm/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { DialogDeleteComponent } from './components/dialog-delete/dialog-delete.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DatePipe } from '@angular/common';

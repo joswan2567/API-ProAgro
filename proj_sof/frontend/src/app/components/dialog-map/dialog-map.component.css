@@ -2,7 +2,6 @@ agm-map,
 #map {
     height: 300px;
     width: 500px;
-    /* margin: auto; */
 }
 
 .mat-dialog-title {
@@ -16,8 +15,8 @@ agm-map,
 }
 
 .mat-dialog-actions[align=end] {
-  justify-content: flex-end;
-  margin-right: 70px;
+    justify-content: flex-end;
+    margin-right: 70px;
 }
 
 agm-map-container-inner {
@@ -25,7 +24,3 @@ agm-map-container-inner {
     border-radius: 10px;
 }
 
-.read-register {
-    margin-left: 23px;
-    margin-bottom: 10px;
-}

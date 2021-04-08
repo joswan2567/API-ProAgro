@@ -4,11 +4,7 @@
 }
 
 .background {
-    /* background:  */
-    /* linear-gradient( var(--primary), var(--secondary)),
-  url(./../../../assets/images/teste.jpg) ; */
-  /* background: rgb(0,36,17); */
-  background: linear-gradient(0deg, rgba(0,36,17,1) 0%, rgba(9,121,52,0.2) 35%, rgba(255,255,255,1) 100%), url(./../assets/images/img_lavoura.png);
+  background: linear-gradient(0deg, rgba(0,36,17,1) 0%, rgba(9,121,52,0.2) 35%, rgba(255,255,255,1) 100%), url(/assets/images/img_lavoura.png);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -16,9 +12,11 @@
   text-align: center;
   height: 100vh;
 }
+
 .example-spacer {
   flex: 1 1 auto;
 }
+
 .bar-top{
   margin-bottom: 50px;
   background-color:rgba(9,121,52,0.7287289915966386);

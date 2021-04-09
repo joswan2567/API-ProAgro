@@ -66,7 +66,7 @@ registerLocaleData(localePt);
     MatPaginatorModule,
     NgxMaskModule.forRoot(),
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBcWwZUp2n5usm0Ae4_DJfQ30L3sCtBzko'
+      apiKey: 'Your_Key'
     })
   ],
   exports: [

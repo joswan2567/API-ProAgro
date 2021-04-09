@@ -146,7 +146,7 @@ export class PerdasListComponent implements OnInit {
 
   async geraMarkers(data) {
     for (let i = 0; i < data.length; i++) {
-      var marker = await this.mapUtil.geraMarker(parseFloat(data[1]['loclat']), parseFloat(data[i]['loclng']), this.map);
+      var marker = await this.mapUtil.geraMarker(parseFloat(data[i]['loclat']), parseFloat(data[i]['loclng']), this.map);
       this.markers.push(marker);
       this.map.panTo(marker.getPosition());
     }

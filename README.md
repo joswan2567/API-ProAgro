@@ -69,7 +69,7 @@ Depois de configurado, podemos fazer a criação da tabelas no banco de dados e 
 $ cd .\proj_sof\backend
 $ python .\manage.py makemigrations
 $ python .\manage.py migrate
-& python .\manage.py runserver
+$ python .\manage.py runserver
 ```
 Se tudo estiver okay, isso aparecerá no console:
 ```bash

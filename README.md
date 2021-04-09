@@ -1,7 +1,5 @@
 # API ProAgro
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
-
 API proposta para atender a necessidade de armazenar, verificar e validar registros referentes a perdas de colheita originadas das ações da natureza.
 
 A solução foi desenvolvida com a integração do Angular 10 para o front-end, Django 3.1.7 para o backend e Google Maps para uma visualização dos dados mais intuitiva e clara, já que a aplicação foi desenvolvida pensando que o usuário final possa utilizá-la, sendo o mesmo devidamente cadastrado e autenticado.
@@ -85,6 +83,23 @@ Quit the server with CTRL-BREAK.
 
 ### 🎲 Rodando o Front End (Web)
 Esse repositório já contém os arquivos estáticos usados no front-end gerados pelo Angular no diretório /backend/static/ang. Mas se houver necessidade de alterar ou adicionar algo no front-end, precisaremos rodar a aplicação angular.
+
+# Adicione uma key Google Maps API
+Para a utilização do mapa é necessário [criar uma key](https://cursos7.com.br/como-gerar-uma-api-key-do-google-maps-para-o-tema-impreza/). Depois de criada adicione no arquivo [app.module.ts]
+
+```bash
+$ cd ./proj_sof/frontend/src/app
+
+# app.module.ts
+...
+imports: [
+    ...
+    AgmCoreModule.forRoot({
+      apiKey: 'Your_Key'
+    })
+  ],
+  ...
+```
 # Instale as dependências
 Vá até o diretório do front-end e instale as dependências
 ```bash

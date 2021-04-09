@@ -1,7 +1,5 @@
 # API ProAgro
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
-
 API proposta para atender a necessidade de armazenar, verificar e validar registros referentes a perdas de colheita originadas das ações da natureza.
 
 A solução foi desenvolvida com a integração do Angular 10 para o front-end, Django 3.1.7 para o backend e Google Maps para uma visualização dos dados mais intuitiva e clara, já que a aplicação foi desenvolvida pensando que o usuário final possa utilizá-la, sendo o mesmo devidamente cadastrado e autenticado.

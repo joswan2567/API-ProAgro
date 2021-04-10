@@ -47,7 +47,6 @@ export class PerdasListComponent implements OnInit {
     private dialog: MatDialog, private formBuilder: FormBuilder, private mapUtil: MapsUtilsComponent) { }
 
   ngAfterViewInit() {
-    this.retrievePerdas();
 
   }
   ngOnInit(): void {
@@ -58,7 +57,8 @@ export class PerdasListComponent implements OnInit {
     this.form.controls['cpf'].valueChanges.subscribe((value) => {
       if (value == "")
         this.searchCPF();
-    })
+    });
+    this.retrievePerdas();
   }
   searchCPF() {
     if (this.form.controls['cpf'].invalid)

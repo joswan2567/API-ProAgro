@@ -8,7 +8,7 @@ A solução foi desenvolvida com a integração do Angular 10 para o front-end, 
 
 Antes de começar de utilizar a aplicação, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
 
- - [Python-3.8.0](https://www.python.org/downloads/release/python-380/) - Linguagem utilizada no banckend, 
+ - [Python-3.8.0](https://www.python.org/downloads/release/python-380/) - Linguagem utilizada no backend, 
  - [PostgresSQL](https://www.postgresql.org/download/) - Banco de dados vinculado ao backend, 
  - [Key Google Maps](https://developers.google.com/maps/documentation/javascript/get-api-key), a aplicação funcionaria normalmente sem o mapa, mas foi utilizado para uma visão mais intuita dos dados, 
  - [Node.js]() - para a utilização do pacote [npm]() no front-end,

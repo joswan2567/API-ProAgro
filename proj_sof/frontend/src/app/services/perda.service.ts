@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const baseUrl = 'https://apiproagro.herokuapp.com/api/perdas';
-// const baseUrl = 'http://localhost:8000/api/perdas';
+const baseUrl = 'http://localhost:8000/api/perdas';
 
 @Injectable({
   providedIn: 'root'

@@ -4,13 +4,14 @@ from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from rest_framework import status
 
-from .models import CadastroConflitante, PerdasCadastro
+from .models import PerdasCadastro
 from .serializers import CadastroConflitanteSerializer, PerdasCadastroSerializer
 from rest_framework.decorators import api_view
 import math
 from datetime import date, datetime, time
 
 from .utils import calc_dist
+
 
 @api_view(['GET', 'POST', 'DELETE'])
 def perda_list(request):
@@ -63,7 +64,7 @@ def perda_detail(request, pk):
 
 @api_view(['GET'])
 def perda_list_cpf(request, cpf):
-    perdas = PerdasCadastro.objects.get(cpf__exact = cpf)
+    perdas = PerdasCadastro.objects.get(cpf__exact=cpf)
 
     if request.method == 'GET':
         perdas_serializer = PerdasCadastroSerializer(perdas, many=True)
@@ -74,26 +75,23 @@ def perda_list_cpf(request, cpf):
 def checa_veracidade(resquest):
     data = JSONParser().parse(resquest)
     date = data['colheitadata'].split('/')
-    id_data = 0 if data['id'] is None else int(data['id']) 
+    id_data = 0 if data['id'] is None else int(data['id'])
 
     if resquest.method == 'POST':
-        perdas = PerdasCadastro.objects.filter(colheitadata__year = date[2],
-                                               colheitadata__month = date[1],
-                                               colheitadata__day = date[0]).exclude(id = id_data)
+        perdas = PerdasCadastro.objects.filter(colheitadata__year=date[2],
+                                               colheitadata__month=date[1],
+                                               colheitadata__day=date[0]).exclude(id=id_data)
 
         for perda in perdas:
-            dist = calc_dist(float(data['loclat']), 
-                             float(data['loclng']), 
-                             float(perda.loclat), 
-                             float(perda.loclng))
-            print(dist,float(data['loclat']), 
-                             float(data['loclng']), 
-                             float(perda.loclat), 
-                             float(perda.loclng) )
-            if dist <= 10:
-                cadastro_conflitante_serializer = CadastroConflitanteSerializer({"loclat": perda.loclat,
-                                                                                 "loclng": perda.loclng,
-                                                                                 "idConfl": perda.id,
-                                                                                 "dist": dist})
-                return JsonResponse(cadastro_conflitante_serializer.data)
-    return JsonResponse(None, safe=False)    
+            if perda.eventoocorrido == data['eventoocorrido']:
+                dist = calc_dist(float(data['loclat']),
+                                 float(data['loclng']),
+                                 float(perda.loclat),
+                                 float(perda.loclng))
+                if dist <= 10:
+                    cadastro_conflitante_serializer = CadastroConflitanteSerializer({"loclat": perda.loclat,
+                                                                                    "loclng": perda.loclng,
+                                                                                     "idConfl": perda.id,
+                                                                                     "dist": dist})
+                    return JsonResponse(cadastro_conflitante_serializer.data)
+    return JsonResponse(None, safe=False)

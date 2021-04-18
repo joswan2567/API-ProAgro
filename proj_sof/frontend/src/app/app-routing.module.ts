@@ -6,13 +6,13 @@ import { PerdasListComponent } from './components/perdas-list/perdas-list.compon
 const routes: Routes = [
   { path: '', redirectTo: 'perdas', pathMatch: 'full' },
   { path: 'perdas', component: PerdasListComponent },
-  { path: 'add', component: AddPerdaComponent },
+  { path: 'add', component: AddPerdaComponent, runGuardsAndResolvers: 'always'},
   { path:'add/:id', component:AddPerdaComponent}
 
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

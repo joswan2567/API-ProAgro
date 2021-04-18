@@ -4,6 +4,4 @@ import { Component } from '@angular/core';
   selector: 'app-dialog-error',
   templateUrl: './dialog-error.component.html',
 })
-export class DialogErrorComponent{
-
-}
+export class DialogErrorComponent{}

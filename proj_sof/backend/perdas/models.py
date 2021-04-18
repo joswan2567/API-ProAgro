@@ -1,6 +1,5 @@
 from django.db import models
 
-
 class PerdasCadastro(models.Model):
 
     nome = models.CharField(max_length=60)
@@ -21,10 +20,4 @@ class PerdasCadastro(models.Model):
         ordering = ['created_at']
         verbose_name = (u'nome')
         verbose_name_plural = (u'nomes')
-
-class CadastroConflitante(models.Model):
-    loclat = models.CharField('LAT', max_length=13, null=True)
-    loclng = models.CharField('LNG', max_length=13, null=True)
-    idConfl = models.IntegerField()
-    dist = models.FloatField()
     

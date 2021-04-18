@@ -76,7 +76,7 @@ export class PerdasListComponent implements OnInit {
       .subscribe(
         data => {
           this.perdas = data;
-          console.log(data);
+          // console.log(data);
           this.dataSource = new MatTableDataSource<PerdaCadastro>(this.perdas);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -102,7 +102,7 @@ export class PerdasListComponent implements OnInit {
     this.perdaService.deleteAll()
       .subscribe(
         response => {
-          console.log(response);
+          // console.log(response);
           this.retrievePerdas();
         },
         error => {
@@ -114,7 +114,7 @@ export class PerdasListComponent implements OnInit {
 
   editPerda(data) {
     this.router.navigate(['/add', { id: data.id }])
-    console.log(data);
+    // console.log(data);
   }
 
   deletePerda(data) {
@@ -125,7 +125,7 @@ export class PerdasListComponent implements OnInit {
         this.perdaService.delete(data.id)
           .subscribe(
             response => {
-              console.log(response);
+              // console.log(response);
               window.location.reload();
               // this.perdas.splice( this.perdas.findIndex(x=> x.id == data.id));
             },
@@ -135,7 +135,7 @@ export class PerdasListComponent implements OnInit {
       }
     });
 
-    console.log(data);
+    // console.log(data);
   }
 
   takeMap(map) {

@@ -7,7 +7,7 @@
       <form [formGroup]="form">
         <mat-form-field fxFlex="80" fxLayout="column" fxLayoutGap="20px" fxLayout.xs="column">
           <mat-label>Busca por CPF</mat-label>
-          <input type="text" formControlName="cpf" matInput mask="000.000.00-00" placeholder="Ex. 123.456.79-10">
+          <input type="text" formControlName="cpf" matInput mask="000.000.000-00" placeholder="Ex. 123.456.79-10">
           <mat-error *ngIf="(form.controls['cpf'].invalid)">
             CPF Inválido!
           </mat-error>

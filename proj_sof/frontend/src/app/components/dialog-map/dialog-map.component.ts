@@ -57,22 +57,17 @@ export class DialogMapComponent implements OnInit {
     };
     this.map.setOptions(mapOptions);
     this.makerRegistroOld = await this.geraMarker(this.data.latConflict, this.data.lngConflict);
-    // this.makerRegistroOld = await this.geraMarker(51.678418, 7.456789);
     this.makerRegistroOld.setMap(this.map);
-    // this.map.panTo(this.makerRegistroOld.getPosition());
 
     this.poly = await this.initLinha();
     this.poly.setMap(this.map);
     this.poly.getPath().push(this.makerRegistroOld.getPosition());
 
     this.makerRegistroCurrent = await this.geraMarker(this.data.latCurrent, this.data.lngCurrent);
-    // this.makerRegistroCurrent = await this.geraMarker(52.456789, 9.478596);
     this.makerRegistroCurrent.setMap(this.map);
     this.makerRegistroCurrent.setOpacity(0.5);
 
     this.poly.getPath().push(this.makerRegistroCurrent.getPosition());
-
-    // this.map.panTo(this.makerRegistroCurrent.getPosition());
 
     this.map.panTo(this.retornaCentro(this.poly));
 
@@ -106,10 +101,8 @@ export class DialogMapComponent implements OnInit {
 
   public retornaCentro(poly) {
     let bounds = new google.maps.LatLngBounds();
-
     for (let i = 0; i < this.poly.getPath().getLength(); i++)
       bounds.extend(this.poly.getPath().getAt(i));
-
     return bounds.getCenter();
   }
 }

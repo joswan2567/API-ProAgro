@@ -65,6 +65,9 @@ export class AddPerdaComponent implements OnInit {
     this.form.controls['colheitadata'].valueChanges.subscribe((value) => {
       this.checaVeracidade();
     })
+    this.form.controls['eventoocorrido'].valueChanges.subscribe((value) => {
+      this.checaVeracidade();
+    })
   }
 
   showOldRegister(id, latConflict, lngConflict, dist) {
@@ -90,10 +93,8 @@ export class AddPerdaComponent implements OnInit {
       subscribe(
         data => {
           this.populaDados(data)
-          console.log(data);
         },
         error => {
-          console.log(error);
         });
   }
 
@@ -101,8 +102,8 @@ export class AddPerdaComponent implements OnInit {
     this.perdaService.update(data.id, data)
       .subscribe(
         response => {
-          console.log(response);
-          console.log('O registro foi atualizado!');
+          // console.log(response);
+          // console.log('O registro foi atualizado!');
           this.router.navigate(['/perdas'], { relativeTo: this.activeRoute });
           this.submitted = true;
         },
@@ -127,23 +128,23 @@ export class AddPerdaComponent implements OnInit {
       return;
     if ((this.form.controls['colheitadata'].valid) &&
       (this.form.controls['loclat'].valid) &&
-      (this.form.controls['loclng'].valid)) {
-      console.log('campos');
+      (this.form.controls['loclng'].valid) &&
+      (this.form.controls['eventoocorrido'].valid)) {
       const data = {
-        colheitadata: this.datepipe.transform(this.form.controls['colheitadata'].value, 'dd/MM/yyyy'),
+        id: this.form.controls['id'].value,
         loclat: this.form.controls['loclat'].value,
         loclng: this.form.controls['loclng'].value,
-        id: this.form.controls['id'].value,
+        eventoocorrido: this.form.controls['eventoocorrido'].value,
+        colheitadata: this.datepipe.transform(this.form.controls['colheitadata'].value, 'dd/MM/yyyy'),
         nome: "",
         cpf: "",
         email: "",
         colheitatipo: "",
-        eventoocorrido: "",
       };
       this.perdaService.checaVerac(data).subscribe(
         response => {
           this.checkVeracidade = false;
-          console.log(response);
+          // console.log(response);
           if (response != null) {
             this.showOldRegister(response.idConfl, response.loclat, response.loclng, response.dist);
           }
@@ -177,8 +178,8 @@ export class AddPerdaComponent implements OnInit {
     if (data.id == null) {
       this.perdaService.create(data).subscribe(
         response => {
-          console.log(response);
-          console.log('O registro foi salvo!');
+          // console.log(response);
+          // console.log('O registro foi salvo!');
           this.router.navigate(['/perdas'], { relativeTo: this.activeRoute });
           this.submitted = true;
         },
